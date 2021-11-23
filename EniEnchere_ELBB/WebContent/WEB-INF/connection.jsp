@@ -39,7 +39,7 @@
                             </label>
                             <div class="col-7">
                             	<fmt:message key="msg_connect_idplaceholder" var="idPlaceholder"></fmt:message>
-                                <input class="form-control" type="text" id="identifier" placeholder="${idPlaceholder}">
+                                <input class="form-control" type="text" id="identifier" placeholder="${idPlaceholder }">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -48,13 +48,13 @@
                             </label>
                             <div class="col-7">
                             	<fmt:message key="msg_connect_pwdplaceholder" var="pwdPlaceholder"></fmt:message>
-                                <input class="form-control" type="password" id="inputPassword" placeholder="${pwdPlaceholder}">
+                                <input class="form-control" type="password" id="inputPassword" placeholder="${pwdPlaceholder }">
                             </div>
                         </div>
                         <div class="form-group row my-5">
                             <div class="col-5">
                             	<fmt:message key="msg_connect_button" var="buttonConnect"></fmt:message>
-                                <input type="button" class="connectButton w-100 h-100" value="${buttonConnect}">
+                                <input type="button" class="connectButton w-100 h-100" value="${buttonConnect }">
                             </div>
                             <div class="col-7">
                                 <div class="col-12">
@@ -71,7 +71,7 @@
                         <div class="form-group row my-10 buttonzone">
                             <div class="col-12">
                             	<fmt:message key="msg_connect_createaccount" var="createAccount"></fmt:message>
-                                <input type="button" class="connectButton w-100 h-100" value="${createAccount}">
+                                <input type="button" class="connectButton w-100 h-100" value="${createAccount }">
                             </div>
                         </div>
                     </form>
