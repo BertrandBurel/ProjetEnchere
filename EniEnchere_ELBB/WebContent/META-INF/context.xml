@@ -4,7 +4,7 @@
         name="jdbc/pool_cnx_notes"
         driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
         type="javax.sql.DataSource"
-        url="jdbc:sqlserver://77.149.66.147:49172;databasename=ENCHERES_GRP1_BDD"
+        url="jdbc:sqlserver://77.149.66.147:49172;databasename=ENCHERES_GRP3_BDD"
         username="groupe3"
         password="Pa$$w0rd"
         
