@@ -6,9 +6,20 @@ public class Withdrawal {
 	private String postalCode;
 	private String town;
 
+	/**
+	 * Default constructor
+	 */
 	public Withdrawal() {
 	}
 
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param article
+	 * @param street
+	 * @param postalCode
+	 * @param town
+	 */
 	public Withdrawal(SoldArticle article, String street, String postalCode, String town) {
 		this.article = article;
 		this.street = street;

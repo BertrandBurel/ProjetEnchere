@@ -4,11 +4,29 @@ public class Category {
 	private int id;
 	private String name;
 
+	/**
+	 * Default constuctor
+	 */
 	public Category() {
 	}
 
+	/**
+	 * Constructor with id
+	 * 
+	 * @param id
+	 * @param name
+	 */
 	public Category(int id, String name) {
 		this.id = id;
+		this.name = name;
+	}
+
+	/**
+	 * Constructor without id
+	 * 
+	 * @param name
+	 */
+	public Category(String name) {
 		this.name = name;
 	}
 

@@ -1,24 +1,64 @@
 package fr.eni.enchere.bo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class SoldArticle {
 	private int id;
 	private String name;
 	private String description;
-	private Date auctionStartDate;
-	private Date auctionEndDate;
+	private LocalDate auctionStartDate;
+	private LocalDate auctionEndDate;
 	private int initialPrice;
 	private int soldPrice;
 	private Category category;
 	private User user;
 
+	/**
+	 * Default constuctor
+	 */
 	public SoldArticle() {
 	}
 
-	public SoldArticle(int id, String name, String description, Date auctionStartDate, Date auctionEndDate,
+	/**
+	 * Constructor with id
+	 * 
+	 * @param id
+	 * @param name
+	 * @param description
+	 * @param auctionStartDate
+	 * @param auctionEndDate
+	 * @param initialPrice
+	 * @param soldPrice
+	 * @param category
+	 * @param user
+	 */
+	public SoldArticle(int id, String name, String description, LocalDate auctionStartDate, LocalDate auctionEndDate,
 			int initialPrice, int soldPrice, Category category, User user) {
 		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.auctionStartDate = auctionStartDate;
+		this.auctionEndDate = auctionEndDate;
+		this.initialPrice = initialPrice;
+		this.soldPrice = soldPrice;
+		this.category = category;
+		this.user = user;
+	}
+
+	/**
+	 * Constructor without id
+	 * 
+	 * @param name
+	 * @param description
+	 * @param auctionStartDate
+	 * @param auctionEndDate
+	 * @param initialPrice
+	 * @param soldPrice
+	 * @param category
+	 * @param user
+	 */
+	public SoldArticle(String name, String description, LocalDate auctionStartDate, LocalDate auctionEndDate,
+			int initialPrice, int soldPrice, Category category, User user) {
 		this.name = name;
 		this.description = description;
 		this.auctionStartDate = auctionStartDate;
@@ -53,19 +93,19 @@ public class SoldArticle {
 		this.description = description;
 	}
 
-	public Date getAuctionStartDate() {
+	public LocalDate getAuctionStartDate() {
 		return auctionStartDate;
 	}
 
-	public void setAuctionStartDate(Date auctionStartDate) {
+	public void setAuctionStartDate(LocalDate auctionStartDate) {
 		this.auctionStartDate = auctionStartDate;
 	}
 
-	public Date getAuctionEndDate() {
+	public LocalDate getAuctionEndDate() {
 		return auctionEndDate;
 	}
 
-	public void setAuctionEndDate(Date auctionEndDate) {
+	public void setAuctionEndDate(LocalDate auctionEndDate) {
 		this.auctionEndDate = auctionEndDate;
 	}
 

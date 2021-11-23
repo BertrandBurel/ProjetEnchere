@@ -16,7 +16,9 @@ public class ConnectionProvider {
 
 		try {
 			context = new InitialContext();
-			ConnectionProvider.dataSource = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx_notes");
+			// ConnectionProvider.dataSource = (DataSource)
+			// context.lookup("java:comp/env/jdbc/pool_cnx_notes");
+			ConnectionProvider.dataSource = (DataSource) context.lookup("context.xml");
 		} catch (NamingException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Cannot access the database");

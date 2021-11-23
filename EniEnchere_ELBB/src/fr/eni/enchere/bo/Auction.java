@@ -8,9 +8,20 @@ public class Auction {
 	private Date auctionDate;
 	private int bidPrice;
 
+	/**
+	 * Default constructor
+	 */
 	public Auction() {
 	}
 
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param user
+	 * @param article
+	 * @param auctionDate
+	 * @param bidPrice
+	 */
 	public Auction(User user, SoldArticle article, Date auctionDate, int bidPrice) {
 		this.user = user;
 		this.article = article;
