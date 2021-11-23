@@ -1,0 +1,21 @@
+article {
+    margin-top: 200px;
+    font-size: 25px;
+}
+
+form div {
+    min-height: 50px;
+}
+
+.form-check-input {
+    height: 65%;
+}
+
+.connectButton {
+    min-height: 80px;
+}
+
+.buttonzone {
+    margin-top: 100px;
+    height: 200px;
+}
