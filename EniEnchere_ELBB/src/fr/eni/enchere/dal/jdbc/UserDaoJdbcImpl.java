@@ -7,6 +7,8 @@ import fr.eni.enchere.dal.DAO;
 
 public class UserDaoJdbcImpl implements DAO<User> {
 
+	private static final String SELECT_ALL_USERS = "select no_utilisateur, pseudo, email, mot_de_passe from UTILISATEURS";
+	
 	@Override
 	public void insert(User t) {
 		// TODO Auto-generated method stub
