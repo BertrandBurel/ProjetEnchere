@@ -3,10 +3,12 @@ package fr.eni.enchere.dal;
 import fr.eni.enchere.bo.Auction;
 import fr.eni.enchere.bo.Category;
 import fr.eni.enchere.bo.SoldArticle;
+import fr.eni.enchere.bo.User;
 import fr.eni.enchere.bo.Withdrawal;
 import fr.eni.enchere.dal.jdbc.AuctionDaoJdbcImpl;
 import fr.eni.enchere.dal.jdbc.CategoryDaoJdbcImpl;
 import fr.eni.enchere.dal.jdbc.SoldArticleDaoJdbcImpl;
+import fr.eni.enchere.dal.jdbc.UserDaoJdbcImpl;
 import fr.eni.enchere.dal.jdbc.WithdrawalDaoJdbcImpl;
 
 public class DAOFactory {
@@ -29,6 +31,11 @@ public class DAOFactory {
 	public static DAO<Withdrawal> getWithdrawalDao() {
 		DAO<Withdrawal> withdrawalDao = new WithdrawalDaoJdbcImpl();
 		return withdrawalDao;
+	}
+	
+	public static DAO<User> getUserDao() {
+		DAO<User> userDao = new UserDaoJdbcImpl();
+		return userDao;
 	}
 
 }
