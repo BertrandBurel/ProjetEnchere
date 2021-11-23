@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${!empty sessionScope.langue?sessionScope.langue:pageContext.request.locale}"/>
+<fmt:setBundle basename="fr.eni.enchere.messages.messages"/>
 
 <!DOCTYPE html>
 <html>
@@ -11,7 +13,7 @@
  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 		 <!-- Custom css for this template -->
 		 <link href="css/connect.css" rel="stylesheet">
-		<title>CONNECTION</title>
+		<title><fmt:message key="msg_connect_title"></fmt:message></title>
 	</head>
 	
 	<body>
@@ -19,7 +21,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-white">
-                    <h2>ENI-Enchères</h2>
+                    <h2><fmt:message key="msg_website_title"></fmt:message></h2>
                 </div>
             </div>
             <p class="m-0 text-center text-white"></p>
@@ -32,37 +34,44 @@
                 <div class="col-lg-8 col-12">
                     <form method="post" action="">
                         <div class="form-group row">
-                            <label for="identifier" class="col-5 col-form-label">Identifiant</label>
+                            <label for="identifier" class="col-5 col-form-label">
+                            	<fmt:message key="msg_connect_identifier"></fmt:message>
+                            </label>
                             <div class="col-7">
-                                <input class="form-control" type="text" id="identifier" placeholder="Pseudo">
+                            	<fmt:message key="msg_connect_idplaceholder" var="idPlaceholder"></fmt:message>
+                                <input class="form-control" type="text" id="identifier" placeholder="${idPlaceholder}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputPassword" class="col-5 col-form-label">Mot de passe</label>
+                            <label for="inputPassword" class="col-5 col-form-label">
+                            	<fmt:message key="msg_connect_password"></fmt:message>
+                            </label>
                             <div class="col-7">
-                                <input class="form-control" type="password" id="inputPassword"
-                                    placeholder="Mot de passe">
+                            	<fmt:message key="msg_connect_pwdplaceholder" var="pwdPlaceholder"></fmt:message>
+                                <input class="form-control" type="password" id="inputPassword" placeholder="${pwdPlaceholder}">
                             </div>
                         </div>
                         <div class="form-group row my-5">
                             <div class="col-5">
-                                <input type="button" class="connectButton w-100 h-100" value="Connexion">
+                            	<fmt:message key="msg_connect_button" var="buttonConnect"></fmt:message>
+                                <input type="button" class="connectButton w-100 h-100" value="${buttonConnect}">
                             </div>
                             <div class="col-7">
                                 <div class="col-12">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="rememberMe">
-                                        <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+                                        <label class="form-check-label" for="rememberMe"><fmt:message key="msg_connect_checklabel"></fmt:message></label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <a href="">Mot de passe oublié</a>
+                                    <a href=""><fmt:message key="msg_connect_forgotpassword"></fmt:message></a>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row my-10 buttonzone">
                             <div class="col-12">
-                                <input type="button" class="connectButton w-100 h-100" value="Créer un compte">
+                            	<fmt:message key="msg_connect_createaccount" var="createAccount"></fmt:message>
+                                <input type="button" class="connectButton w-100 h-100" value="${createAccount}">
                             </div>
                         </div>
                     </form>
