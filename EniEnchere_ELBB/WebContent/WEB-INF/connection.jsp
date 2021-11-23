@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-white">
-                    <h3>ENI-Enchères</h3>
+                    <h2>ENI-Enchères</h2>
                 </div>
             </div>
             <p class="m-0 text-center text-white"></p>
