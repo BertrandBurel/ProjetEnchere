@@ -58,6 +58,16 @@ public class User {
 		this.administrator = administrator;
 	}
 
+	/**
+	 * constructor for connection
+	 */
+	public User(int id, String pseudonym, String email, String password) {
+		this.id = id;
+		this.pseudonym = pseudonym;
+		this.email = email;
+		this.password = password;
+	}
+
 	public int getId() {
 		return id;
 	}

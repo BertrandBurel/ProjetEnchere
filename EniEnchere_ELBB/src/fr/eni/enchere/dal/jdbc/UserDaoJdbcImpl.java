@@ -1,8 +1,13 @@
 package fr.eni.enchere.dal.jdbc;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.User;
+import fr.eni.enchere.dal.ConnectionProvider;
 import fr.eni.enchere.dal.DAO;
 
 public class UserDaoJdbcImpl implements DAO<User> {
@@ -23,7 +28,17 @@ public class UserDaoJdbcImpl implements DAO<User> {
 
 	@Override
 	public List<User> selectAll() {
-		// TODO Auto-generated method stub
+		List<User> usersList = new ArrayList<User>();
+		try {
+			Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_USERS);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				usersList.add(new User(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("email"), rs.getString("mot_de_passe")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
