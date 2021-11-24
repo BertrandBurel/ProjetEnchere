@@ -30,22 +30,34 @@
 	            <p class="m-0 text-center text-white"></p>
 	        </div>
 	    </header>
-		<h1><fmt:message key="msg_index_title"></fmt:message></h1>
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-12">
+					<h1><fmt:message key="msg_index_title"></fmt:message></h1>
+				</div>
+			</div>
+		</div>
 		<form method="post">
 			<div class="container">
 	            <div class="row">
 	                <div class="col-12">
 						<h3><fmt:message key="msg_index_form_title"></fmt:message></h3>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-6">
-						<input type="search"/>
+						<input type="search" placeholder="<fmt:message key="msg_index_search_field"></fmt:message>"/>
+						<p><fmt:message key="msg_index_category"></fmt:message></p>
+						<input list="category" name="browser" id="browser">
+						<datalist id="category">
+						<% %>
+						    <option value="test">
+						    <option value="test2">
+						<% %>
+						</datalist>
 					</div>
-					<div class="col-12">
-						<p></p>
-						<input />
-					</div>
-					<div>
-						<input />
+					<div  class="col-6">
+						<input type=button value="<fmt:message key="msg_index_search_button"></fmt:message>"/>
 					</div>
 				</div>
 			</div>
