@@ -2,8 +2,6 @@ package fr.eni.enchere.dal;
 
 import fr.eni.enchere.bo.Auction;
 import fr.eni.enchere.bo.Category;
-import fr.eni.enchere.bo.SoldArticle;
-import fr.eni.enchere.bo.User;
 import fr.eni.enchere.bo.Withdrawal;
 import fr.eni.enchere.dal.jdbc.AuctionDaoJdbcImpl;
 import fr.eni.enchere.dal.jdbc.CategoryDaoJdbcImpl;
@@ -36,10 +34,10 @@ public class DAOFactory {
 	/**
 	 * Give a DAO instance for SoldArticle manipulation
 	 * 
-	 * @return DAO<SoldArticle>
+	 * @return DAOSoldArticle
 	 */
-	public static DAO<SoldArticle> getSoldArticleDao() {
-		DAO<SoldArticle> soldArticleDao = new SoldArticleDaoJdbcImpl();
+	public static DAOSoldArticle getSoldArticleDao() {
+		DAOSoldArticle soldArticleDao = new SoldArticleDaoJdbcImpl();
 		return soldArticleDao;
 	}
 
@@ -52,7 +50,7 @@ public class DAOFactory {
 		DAO<Withdrawal> withdrawalDao = new WithdrawalDaoJdbcImpl();
 		return withdrawalDao;
 	}
-	
+
 	public static DAOUser getUserDao() {
 		DAOUser userDao = new UserDaoJdbcImpl();
 		return userDao;

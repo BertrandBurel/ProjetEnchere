@@ -6,19 +6,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.dal.ConnectionProvider;
-import fr.eni.enchere.dal.DAO;
+import fr.eni.enchere.dal.DAOSoldArticle;
 
-public class SoldArticleDaoJdbcImpl implements DAO<SoldArticle> {
+public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
+
+	private final String SELECT_ARTICLES_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
+	private final String SELECT_ARTICLES_BY_DATES = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres < CAST(CURRENT_TIMESTAMP AS DATE) AND date_fin_encheres > CAST(CURRENT_TIMESTAMP AS DATE) ORDER BY date_fin_encheres ASC";
+	private final String INSERT_ARTICLES = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	@Override
 	public void insert(SoldArticle soldArticle) {
-		String request = new String(
-				"INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) "
-						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		String request = new String(INSERT_ARTICLES);
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 
@@ -46,7 +49,7 @@ public class SoldArticleDaoJdbcImpl implements DAO<SoldArticle> {
 
 	@Override
 	public SoldArticle selectById(int index) {
-		String request = new String("SELECT * FROM ARTICLES_VENDUS WHERE no_article=?");
+		String request = new String(SELECT_ARTICLES_BY_ID);
 
 		try {
 			Connection connection = ConnectionProvider.getConnection();
@@ -88,6 +91,33 @@ public class SoldArticleDaoJdbcImpl implements DAO<SoldArticle> {
 	public void delete(int index) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<SoldArticle> selectCurrentAuctions() {
+		String request = new String(SELECT_ARTICLES_BY_DATES);
+
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+
+			PreparedStatement statement = connection.prepareStatement(request);
+
+			ResultSet resultSet = statement.executeQuery();
+
+			List<SoldArticle> soldArticleList = new ArrayList<>();
+			while (resultSet.next()) {
+				soldArticleList.add(soldArticleFormatter(resultSet));
+			}
+
+			statement.close();
+			connection.close();
+
+			return soldArticleList;
+		} catch (SQLException e) {
+			System.err.println("Select par Ids impossible");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private PreparedStatement queryParametrisation(PreparedStatement statement, SoldArticle soldArticle)
