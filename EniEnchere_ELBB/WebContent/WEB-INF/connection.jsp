@@ -32,7 +32,8 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-12">
-                    <form method="post" action="">
+                    <form method="post" action="ServletSignin">
+                    	<!-- Identifiant -->
                         <div class="form-group row">
                             <label for="identifier" class="col-5 col-form-label">
                             	<fmt:message key="msg_connect_identifier"></fmt:message>
@@ -42,6 +43,7 @@
                                 <input class="form-control" type="text" id="identifier" placeholder="${idPlaceholder }">
                             </div>
                         </div>
+                        <!-- Mot de passe -->
                         <div class="form-group row">
                             <label for="inputPassword" class="col-5 col-form-label">
                             	<fmt:message key="msg_connect_password"></fmt:message>
@@ -51,11 +53,14 @@
                                 <input class="form-control" type="password" id="inputPassword" placeholder="${pwdPlaceholder }">
                             </div>
                         </div>
+                        <!-- Connexion -->
                         <div class="form-group row my-5">
+                        	<!-- Bouton -->
                             <div class="col-5">
                             	<fmt:message key="msg_connect_button" var="buttonConnect"></fmt:message>
                                 <input type="button" class="connectButton w-100 h-100" value="${buttonConnect }">
                             </div>
+                            <!-- Checkbox et lien -->
                             <div class="col-7">
                                 <div class="col-12">
                                     <div class="form-check">
@@ -69,6 +74,7 @@
                             </div>
                         </div>
                     </form>
+                    <!-- Bouton création compte -->
                     <form method="post" action="">
                         <div class="form-group row my-10 buttonzone">
                             <div class="col-12">
