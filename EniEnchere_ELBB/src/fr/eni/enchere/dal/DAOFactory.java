@@ -33,8 +33,8 @@ public class DAOFactory {
 		return withdrawalDao;
 	}
 	
-	public static DAO<User> getUserDao() {
-		DAO<User> userDao = new UserDaoJdbcImpl();
+	public static DAOUser getUserDao() {
+		DAOUser userDao = new UserDaoJdbcImpl();
 		return userDao;
 	}
 
