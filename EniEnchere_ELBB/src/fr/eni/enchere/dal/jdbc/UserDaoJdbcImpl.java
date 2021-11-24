@@ -9,8 +9,9 @@ import java.util.List;
 import fr.eni.enchere.bo.User;
 import fr.eni.enchere.dal.ConnectionProvider;
 import fr.eni.enchere.dal.DAO;
+import fr.eni.enchere.dal.DAOUser;
 
-public class UserDaoJdbcImpl implements DAO<User> {
+public class UserDaoJdbcImpl implements DAOUser {
 
 	private static final String SELECT_USER_BY_ID = "select * from UTILISATEURS where no_utilisateur = ?";
 	private static final String SELECT_USER_BY_PSEUDO = "select * from UTILISATEURS where pseudo = ?";
