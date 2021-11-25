@@ -5,6 +5,7 @@ import java.util.List;
 import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.DAOSoldArticle;
+import fr.eni.enchere.exceptions.BusinessException;
 
 public class SoldArticleManager {
 	private DAOSoldArticle soldArticleDao;
@@ -13,7 +14,7 @@ public class SoldArticleManager {
 		soldArticleDao = DAOFactory.getSoldArticleDao();
 	}
 
-	public List<SoldArticle> getCurrentAuctions() {
+	public List<SoldArticle> getCurrentAuctions() throws BusinessException {
 		return soldArticleDao.selectCurrentAuctions();
 	}
 }
