@@ -2,6 +2,8 @@ package fr.eni.enchere.dal;
 
 import java.util.List;
 
+import fr.eni.enchere.exceptions.BusinessException;
+
 public interface DAO<T> {
 
 	/**
@@ -10,7 +12,7 @@ public interface DAO<T> {
 	 * @param t
 	 *            BO Object T to insert
 	 */
-	public void insert(T t);
+	public void insert(T t) throws BusinessException;
 
 	/**
 	 * Select Object by id in database
@@ -19,14 +21,14 @@ public interface DAO<T> {
 	 *            id to search
 	 * @return BO Object T
 	 */
-	public T selectById(int index);
+	public T selectById(int index) throws BusinessException;
 
 	/**
 	 * Return the whole database table
 	 * 
 	 * @return BO Object T
 	 */
-	public List<T> selectAll();
+	public List<T> selectAll() throws BusinessException;
 
 	/**
 	 * Update the set Object in database
@@ -34,7 +36,7 @@ public interface DAO<T> {
 	 * @param t
 	 *            BO Object to update
 	 */
-	public void update(T t);
+	public void update(T t) throws BusinessException;
 
 	/**
 	 * Delete the set Object in database
@@ -42,5 +44,5 @@ public interface DAO<T> {
 	 * @param index
 	 *            id of the Object to delete
 	 */
-	public void delete(int index);
+	public void delete(int index) throws BusinessException;
 }
