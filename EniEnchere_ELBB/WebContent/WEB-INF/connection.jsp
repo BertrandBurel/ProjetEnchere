@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-12">
-                    <form method="post" action="ServletSignin">
+                    <form method="post" action="<%=request.getContextPath()%>/Signin">
                     	<!-- Identifiant -->
                         <div class="form-group row">
                             <label for="identifier" class="col-5 col-form-label">
@@ -64,7 +64,7 @@
                             <div class="col-7">
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
                                         <label class="form-check-label" for="rememberMe"><fmt:message key="msg_connect_checklabel"></fmt:message></label>
                                     </div>
                                 </div>
