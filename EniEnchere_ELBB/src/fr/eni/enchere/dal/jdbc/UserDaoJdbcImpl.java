@@ -8,23 +8,31 @@ import java.util.List;
 import fr.eni.enchere.bo.User;
 import fr.eni.enchere.dal.ConnectionProvider;
 import fr.eni.enchere.dal.DAOUser;
+import fr.eni.enchere.dal.ErrorCodesDAL;
+import fr.eni.enchere.exceptions.BusinessException;
 
 public class UserDaoJdbcImpl implements DAOUser {
 
-	private static final String SELECT_USER_BY_ID = "select * from UTILISATEURS where no_utilisateur = ?";
-	private static final String SELECT_USER_BY_PSEUDO = "select * from UTILISATEURS where pseudo = ?";
-	private static final String SELECT_USER_BY_EMAIL = "select * from UTILISATEURS where email = ?";
+	private static final String SELECT_USER_BY_ID = "select no_utilisateur, pseudo, nom, prenom, email, telephone, rue, "
+							+ "code_postal, ville, mot_de_passe, credit, administrateur "
+							+ "from UTILISATEURS where no_utilisateur = ?";
+	private static final String SELECT_USER_BY_PSEUDO = "select no_utilisateur, pseudo, nom, prenom, email, telephone, rue, "
+							+ "code_postal, ville, mot_de_passe, credit, administrateur "
+							+ "from UTILISATEURS where pseudo = ?";
+	private static final String SELECT_USER_BY_EMAIL = "select no_utilisateur, pseudo, nom, prenom, email, telephone, rue, "
+							+ "code_postal, ville, mot_de_passe, credit, administrateur "
+							+ "from UTILISATEURS where email = ?";
 	private static final String INSERT_USER = "insert into UTILISATEURS (pseudo, nom, prenom,"
 						+ "email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) "
 						+ "values (?,?,?,?,?,?,?,?,?,?,?)";
 	
 	@Override
-	public void insert(User user) {
-//		if (user == null) {
-//			BusinessException businessException = new BusinessException();
-//			businessException.ajouterErreur(CodesDAL.INSERT_OBJECT_NULL);
-//			throw businessException;
-//		}
+	public void insert(User user) throws BusinessException {
+		if (user == null) {
+			BusinessException businessException = new BusinessException();
+			businessException.addError(ErrorCodesDAL.INSERT_OBJECT_NULL);
+			throw businessException;
+		}
 		
 		try {
 			Connection cnx = ConnectionProvider.getConnection();
@@ -52,6 +60,9 @@ public class UserDaoJdbcImpl implements DAOUser {
 			} catch (Exception e) {
 				e.printStackTrace();
 				cnx.rollback();
+				BusinessException businessException = new BusinessException();
+				businessException.addError(ErrorCodesDAL.INSERT_OBJECT_FAILED);
+				throw businessException;
 			} finally {
 				cnx.close();
 			}
@@ -62,7 +73,7 @@ public class UserDaoJdbcImpl implements DAOUser {
 	}
 
 	@Override
-	public User selectById(int index) {
+	public User selectById(int index) throws BusinessException {
 		User user = new User();
 		try {
 			Connection cnx = ConnectionProvider.getConnection();
@@ -88,6 +99,9 @@ public class UserDaoJdbcImpl implements DAOUser {
 			cnx.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.addError(ErrorCodesDAL.SELECT_BY_ID_FAILED);
+			throw businessException;
 		}
 		return user;
 	}
@@ -110,7 +124,7 @@ public class UserDaoJdbcImpl implements DAOUser {
 		
 	}
 	
-	public User selectByPseudo(String pseudo) {
+	public User selectByPseudo(String pseudo) throws BusinessException {
 		User user = new User();
 		try {
 			Connection cnx = ConnectionProvider.getConnection();
@@ -136,11 +150,14 @@ public class UserDaoJdbcImpl implements DAOUser {
 			cnx.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.addError(ErrorCodesDAL.SELECT_BY_PSEUDO_FAILED);
+			throw businessException;
 		}
 		return user;
 	}
 	
-	public User selectByEmail(String email) {
+	public User selectByEmail(String email) throws BusinessException {
 		User user = new User();
 		try {
 			Connection cnx = ConnectionProvider.getConnection();
@@ -166,6 +183,9 @@ public class UserDaoJdbcImpl implements DAOUser {
 			cnx.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.addError(ErrorCodesDAL.SELECT_BY_EMAIL_FAILED);
+			throw businessException;
 		}
 		return user;
 	}
