@@ -8,7 +8,7 @@ public abstract class MessagesReader {
 	
 	static {
 		try {
-			rb = ResourceBundle.getBundle("fr.eni.enchere.messages.messagesErreur");
+			rb = ResourceBundle.getBundle("fr.eni.enchere.messages.messagesError");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
