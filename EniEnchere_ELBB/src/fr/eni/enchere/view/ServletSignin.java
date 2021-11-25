@@ -51,7 +51,7 @@ public class ServletSignin extends HttpServlet {
 					session.setAttribute("Pseudo", user.getPassword());
 					if (userCheck != null) {
 						Cookie cookie = new Cookie("Pseudo", user.getPseudonym());
-						cookie.setMaxAge(30);
+						cookie.setMaxAge(60*5);
 						response.addCookie(cookie);
 					}
 					response.sendRedirect("/WEB-INF/auctionsList.jsp");
