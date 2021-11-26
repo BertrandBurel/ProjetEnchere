@@ -1,8 +1,23 @@
--- Script de cr�ation de la base de donn�es ENCHERES
+USE ENCHERES_GRP3_BDD;
+GO
+
+
+-- Script de nettoyage de la base de données ENCHERES
 --   type :      SQL Server 2012
 --
 
+DROP TABLE ENCHERES;
+DROP TABLE RETRAITS;
+DROP TABLE ARTICLES_VENDUS;
+DROP TABLE CATEGORIES;
+DROP TABLE UTILISATEURS;
 
+GO
+
+
+-- Script de création de la base de données ENCHERES
+--   type :      SQL Server 2012
+--
 
 CREATE TABLE CATEGORIES (
     no_categorie   INTEGER IDENTITY(1,1) NOT NULL,
@@ -96,9 +111,6 @@ GO
 -- Script de création de jeu de test
 --				SQL Server 12C
 --
-
-USE ENCHERES_GRP3_BDD;
-GO
 
 --
 -- USER

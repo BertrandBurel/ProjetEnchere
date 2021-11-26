@@ -14,6 +14,7 @@ import fr.eni.enchere.bll.CategoryManager;
 import fr.eni.enchere.bll.SoldArticleManager;
 import fr.eni.enchere.bo.Category;
 import fr.eni.enchere.bo.SoldArticle;
+import fr.eni.enchere.exceptions.BusinessException;
 
 /**
  * Servlet implementation class IndexServlet
@@ -49,13 +50,18 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Category> categories = categoryManager.getCategories();
-		List<SoldArticle> currentAuctionList = soldArticleManager.getCurrentAuctions();
+		try {
+			List<Category> categories = categoryManager.getCategories();
+			List<SoldArticle> currentAuctionList = soldArticleManager.getCurrentAuctions();
 
-		request.setAttribute("categories", categories);
-		request.setAttribute("current_auction_list", currentAuctionList);
+			request.setAttribute("categories", categories);
+			request.setAttribute("current_auction_list", currentAuctionList);
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/index.jsp");
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp");
 		rd.forward(request, response);
 	}
 

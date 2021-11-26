@@ -9,14 +9,19 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.bo.Category;
 import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.dal.ConnectionProvider;
+import fr.eni.enchere.dal.DAO;
+import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.DAOSoldArticle;
+import fr.eni.enchere.dal.DAOUser;
+import fr.eni.enchere.exceptions.BusinessException;
 
 public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 
 	private final String SELECT_ARTICLES_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
-	private final String SELECT_ARTICLES_BY_DATES = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres < CAST(CURRENT_TIMESTAMP AS DATE) AND date_fin_encheres > CAST(CURRENT_TIMESTAMP AS DATE) ORDER BY date_fin_encheres ASC";
+	private final String SELECT_ARTICLES_BY_DATES = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres <= CAST(CURRENT_TIMESTAMP AS DATE) AND date_fin_encheres >= CAST(CURRENT_TIMESTAMP AS DATE) ORDER BY date_fin_encheres ASC";
 	private final String INSERT_ARTICLES = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	@Override
@@ -71,6 +76,9 @@ public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 		} catch (SQLException e) {
 			System.err.println("Select par Ids impossible");
 			e.printStackTrace();
+		} catch (BusinessException e) {
+			System.err.println("Select par Ids impossible");
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -116,6 +124,9 @@ public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 		} catch (SQLException e) {
 			System.err.println("Select par Ids impossible");
 			e.printStackTrace();
+		} catch (BusinessException e) {
+			System.err.println("Select par Ids impossible");
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -138,7 +149,10 @@ public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 		return statement;
 	}
 
-	private SoldArticle soldArticleFormatter(ResultSet resultSet) throws SQLException {
+	private SoldArticle soldArticleFormatter(ResultSet resultSet) throws SQLException, BusinessException {
+		DAOUser daoUser = DAOFactory.getUserDao();
+		DAO<Category> daoCategory = DAOFactory.getCategoryDao();
+
 		SoldArticle soldArticle = new SoldArticle();
 		soldArticle.setId(resultSet.getInt("no_article"));
 		soldArticle.setName(resultSet.getString("nom_article"));
@@ -147,9 +161,9 @@ public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 		soldArticle.setAuctionEndDate(resultSet.getDate("date_fin_encheres").toLocalDate());
 		soldArticle.setInitialPrice(resultSet.getInt("prix_initial"));
 		soldArticle.setSoldPrice(resultSet.getInt("prix_vente"));
-		// TODO
-		// soldArticle.setUser(resultSet.getString("no_utilisateur"));
-		// soldArticle.setCategory(resultSet.getString("no_categorie"));
+
+		soldArticle.setUser(daoUser.selectById(resultSet.getInt("no_utilisateur")));
+		soldArticle.setCategory(daoCategory.selectById(resultSet.getInt("no_categorie")));
 
 		return soldArticle;
 	}
