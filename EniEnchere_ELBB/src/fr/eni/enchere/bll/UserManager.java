@@ -9,23 +9,22 @@ import fr.eni.enchere.dal.DAOUser;
 import fr.eni.enchere.exceptions.BusinessException;
 
 public class UserManager {
-	
-	 private DAO<User> listeUserDao;
+
 	 private DAOUser userDao;
 	 
 	 public UserManager() {
-		 this.listeUserDao = DAOFactory.getUserDao();
+		 userDao = DAOFactory.getUserDao();
 	 }
 	 
 	 public User getUserById(int index) throws BusinessException {
-		 return this.listeUserDao.selectById(index);
+		 return userDao.selectById(index);
 	 }
 	 
 	 public User getUserByPseudo(String pseudo) throws BusinessException {
-		 return this.userDao.selectByPseudo(pseudo);
+		 return userDao.selectByPseudo(pseudo);
 	 }
 	 
 	 public User getUserByEmail(String email) throws BusinessException {
-		 return this.userDao.selectByEmail(email);
+		 return userDao.selectByEmail(email);
 	 }
 }
