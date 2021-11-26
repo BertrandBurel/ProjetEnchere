@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +17,13 @@ import fr.eni.enchere.bo.User;
 /**
  * Servlet implementation class ServletSignin
  */
-@WebServlet("/ServletSignin")
+@WebServlet("/Signin")
 public class ServletSignin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private String userPseudoInput;
 	private String userPwdInput;
-	private boolean userCheck;
+	private String userCheck;
        
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,6 +34,7 @@ public class ServletSignin extends HttpServlet {
 		User user = null;
 		userPseudoInput = request.getParameter("identifier");
 		userPwdInput = request.getParameter("inputPassword");
+		userCheck = request.getParameter("remmemberMe");
 		try {
 			if (userPseudoInput.contains("@")) {
 				user = userManager.getUserByEmail(userPseudoInput);
@@ -46,7 +48,12 @@ public class ServletSignin extends HttpServlet {
 				rd.forward(request, response);
 			} else {
 				if (user.getPassword() == userPwdInput) {
-					session.setAttribute("connected", "ok");
+					session.setAttribute("pseudo", user.getPassword());
+					if (userCheck != null) {
+						Cookie cookie = new Cookie("pseudo", user.getPseudonym());
+						cookie.setMaxAge(60*5);
+						response.addCookie(cookie);
+					}
 					response.sendRedirect("/WEB-INF/auctionsList.jsp");
 				} else {
 					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/connection.jsp");

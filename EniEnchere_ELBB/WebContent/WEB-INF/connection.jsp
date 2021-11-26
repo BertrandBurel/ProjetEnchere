@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-12">
-                    <form method="post" action="ServletSignin">
+                    <form method="post" action="<%=request.getContextPath()%>/Signin">
                     	<!-- Identifiant -->
                         <div class="form-group row">
                             <label for="identifier" class="col-5 col-form-label">
@@ -40,7 +40,8 @@
                             </label>
                             <div class="col-7">
                             	<fmt:message key="msg_connect_idplaceholder" var="idPlaceholder"></fmt:message>
-                                <input class="form-control" type="text" id="identifier" placeholder="${idPlaceholder }">
+                            	<c:set var="userPseudo" value='${requestScope["pseudo"]}' />
+                                <input class="form-control" type="text" id="identifier" placeholder="${idPlaceholder }" <c:if test="${userPseudo}!=null">value="${userPseudo}"</c:if>>
                             </div>
                         </div>
                         <!-- Mot de passe -->
@@ -50,7 +51,8 @@
                             </label>
                             <div class="col-7">
                             	<fmt:message key="msg_connect_pwdplaceholder" var="pwdPlaceholder"></fmt:message>
-                                <input class="form-control" type="password" id="inputPassword" placeholder="${pwdPlaceholder }">
+                            	<c:set var="userPwd" value='${requestScope["password"]}' />
+                                <input class="form-control" type="password" id="inputPassword" placeholder="${pwdPlaceholder}" <c:if test="${userPwd}!=null">value="${userPwd}"</c:if>>
                             </div>
                         </div>
                         <!-- Connexion -->
@@ -64,7 +66,7 @@
                             <div class="col-7">
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
                                         <label class="form-check-label" for="rememberMe"><fmt:message key="msg_connect_checklabel"></fmt:message></label>
                                     </div>
                                 </div>
