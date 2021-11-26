@@ -48,9 +48,9 @@ public class ServletSignin extends HttpServlet {
 				rd.forward(request, response);
 			} else {
 				if (user.getPassword() == userPwdInput) {
-					session.setAttribute("Pseudo", user.getPassword());
+					session.setAttribute("pseudo", user.getPassword());
 					if (userCheck != null) {
-						Cookie cookie = new Cookie("Pseudo", user.getPseudonym());
+						Cookie cookie = new Cookie("pseudo", user.getPseudonym());
 						cookie.setMaxAge(60*5);
 						response.addCookie(cookie);
 					}

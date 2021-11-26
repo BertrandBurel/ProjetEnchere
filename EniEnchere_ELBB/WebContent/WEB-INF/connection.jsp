@@ -40,7 +40,7 @@
                             </label>
                             <div class="col-7">
                             	<fmt:message key="msg_connect_idplaceholder" var="idPlaceholder"></fmt:message>
-                            	<c:set var="userPseudo" value='${requestScope["Pseudo"]}' />
+                            	<c:set var="userPseudo" value='${requestScope["pseudo"]}' />
                                 <input class="form-control" type="text" id="identifier" placeholder="${idPlaceholder }" <c:if test="${userPseudo}!=null">value="${userPseudo}"</c:if>>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                             </label>
                             <div class="col-7">
                             	<fmt:message key="msg_connect_pwdplaceholder" var="pwdPlaceholder"></fmt:message>
-                            	<c:set var="userPwd" value='${requestScope["Password"]}' />
+                            	<c:set var="userPwd" value='${requestScope["password"]}' />
                                 <input class="form-control" type="password" id="inputPassword" placeholder="${pwdPlaceholder}" <c:if test="${userPwd}!=null">value="${userPwd}"</c:if>>
                             </div>
                         </div>

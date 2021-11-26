@@ -32,11 +32,11 @@ public class ServletToConnection extends HttpServlet {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("Pseudo")) {
+				if (cookie.getName().equals("pseudo")) {
 					try {
 						user = userManager.getUserByPseudo(cookie.getValue());
-						request.setAttribute("Pseudo", user.getPseudonym());
-						request.setAttribute("Password", user.getPassword());
+						request.setAttribute("pseudo", user.getPseudonym());
+						request.setAttribute("password", user.getPassword());
 					} catch (BusinessException e) {
 						e.printStackTrace();
 					}
@@ -45,11 +45,11 @@ public class ServletToConnection extends HttpServlet {
 			}
 		} else {
 			if (session.getAttribute("Pseudo") != null) {
-				String pseudoSession = (String) session.getAttribute("Pseudo");
+				String pseudoSession = (String) session.getAttribute("pseudo");
 				try {
 					user = userManager.getUserByPseudo(pseudoSession);
-				request.setAttribute("Pseudo", user.getPseudonym());
-				request.setAttribute("Password", user.getPassword());
+				request.setAttribute("pseudo", user.getPseudonym());
+				request.setAttribute("password", user.getPassword());
 				} catch (BusinessException e) {
 					e.printStackTrace();
 				}
