@@ -13,13 +13,13 @@ public class BusinessException extends Exception {
 		super();
 		this.listErrorCodes = new ArrayList<>();
 	}
-	
+
 	public void addError(int errorCode) {
 		if (!this.listErrorCodes.contains(errorCode)) {
 			this.listErrorCodes.add(errorCode);
 		}
 	}
-	
+
 	public boolean hasErrors() {
 		return this.listErrorCodes.size() > 0;
 	}
@@ -27,5 +27,4 @@ public class BusinessException extends Exception {
 	public List<Integer> getListErrorCodesr() {
 		return this.listErrorCodes;
 	}
-	
 }

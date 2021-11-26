@@ -17,10 +17,10 @@ import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.exceptions.BusinessException;
 
 /**
- * Servlet implementation class IndexServlet
+ * Provide ressources for the index.jsp displays
  */
 @WebServlet("/index")
-public class IndexServlet extends HttpServlet {
+public class ServletIndex extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	CategoryManager categoryManager;
@@ -29,7 +29,7 @@ public class IndexServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public IndexServlet() {
+	public ServletIndex() {
 		super();
 		categoryManager = new CategoryManager();
 		soldArticleManager = new SoldArticleManager();
@@ -50,6 +50,14 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String category = new String();
+
+		if (request.getParameter("category_choice") != null) {
+			category = request.getParameter("category_choice");
+		}
+
+		// TODO filter results
+
 		try {
 			List<Category> categories = categoryManager.getCategories();
 			List<SoldArticle> currentAuctionList = soldArticleManager.getCurrentAuctions();
