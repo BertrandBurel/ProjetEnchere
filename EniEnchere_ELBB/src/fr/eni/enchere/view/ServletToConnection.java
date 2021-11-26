@@ -44,7 +44,7 @@ public class ServletToConnection extends HttpServlet {
 				}
 			}
 		} else {
-			if (session.getAttribute("Pseudo") != null) {
+			if (session.getAttribute("pseudo") != null) {
 				String pseudoSession = (String) session.getAttribute("pseudo");
 				try {
 					user = userManager.getUserByPseudo(pseudoSession);
