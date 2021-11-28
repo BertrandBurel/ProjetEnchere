@@ -40,7 +40,7 @@
 					<h1><fmt:message key="msg_index_title"></fmt:message></h1>
 				</div>
 			</div>
-			<form class="row" method="post">
+			<form class="row" method="post" action="index">
             	<!-- Search zone -->
                 <div class="col-12">
 					<h3><fmt:message key="msg_index_form_title"></fmt:message></h3>
@@ -52,49 +52,26 @@
 							<p><fmt:message key="msg_index_category"></fmt:message></p>
 						</div>
 						<div class="col-6">
-							<select class="form-select form-control" >
+							<select class="form-select form-control" name="category_choice">
 								<option selected value=""><fmt:message key="msg_index_category_choice"></fmt:message></option>
-								<c:forEach items="${ categories }" var="category">
-								    <option value="${ category.name }">${ category.name }</option>
+								<c:forEach items="${categories}" var="category">
+								    <option value="${category.name}">${category.name}</option>
 								</c:forEach>
 							</select>
 						</div>
 						<!-- Search text field -->
 						<div class="input-group col-12">
-							<input class="form-control" type="search" placeholder="<fmt:message key="msg_index_search_field"></fmt:message>"/>
+							<input class="form-control" type="search" name="search_string" placeholder="<fmt:message key="msg_index_search_field"></fmt:message>"/>
 							<span class="input-group-text" id="basic-addon1"><img src="img/search.png" alt="" width="30" height="24"></span>
 						</div>
 					</div>
 				</div>
 				<!-- Search button -->
 				<div  class="col-6">
-					<input class="btn btn-primary form-control-lg" type=button value="<fmt:message key="msg_index_search_button"></fmt:message>"/>
+					<input class="btn btn-primary form-control-lg" type="submit" value="<fmt:message key="msg_index_search_button"></fmt:message>"/>
 				</div>
 			</form>
 		</div>
-		<!-- Result set -->
-		<div class="container">
-	        <div class="row">
-	        	<c:forEach items="${current_auction_list}" var="article">
-					<div class="col-6 form-control">
-						<div class="row">
-							<div class="col-3">
-								<img src="" alt="<fmt:message key="msg_article_img_default"></fmt:message>"></img>
-							</div>
-							<div class="col-9">
-								<h4 class="text-decoration-underline">${article.name}</h4>
-								<p><fmt:message key="msg_article_price"></fmt:message><fmt:message key="msg_article_currency"></fmt:message></p>
-								<p><fmt:message key="msg_article_end_date"></fmt:message>
-									<fmt:parseDate value="${article.auctionEndDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
-									<fmt:formatDate value="${parsedDate}" var="displayDate" type="date" pattern="dd.MM.yyyy" />
-									${displayDate}
-								</p>
-								<p><fmt:message key="msg_article_seller"></fmt:message>${ article.user.pseudonym }</p>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
+		<%@ include file="inclusions/SoldArticleList.jsp" %>
 	</body>
 </html>
