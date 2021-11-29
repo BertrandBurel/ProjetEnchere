@@ -1,7 +1,6 @@
 package fr.eni.enchere.dal;
 
 import fr.eni.enchere.bo.Auction;
-import fr.eni.enchere.bo.Category;
 import fr.eni.enchere.bo.Withdrawal;
 import fr.eni.enchere.dal.jdbc.AuctionDaoJdbcImpl;
 import fr.eni.enchere.dal.jdbc.CategoryDaoJdbcImpl;
@@ -26,8 +25,8 @@ public class DAOFactory {
 	 * 
 	 * @return DAO<Category>
 	 */
-	public static DAO<Category> getCategoryDao() {
-		DAO<Category> categoryDao = new CategoryDaoJdbcImpl();
+	public static DAOCategory getCategoryDao() {
+		DAOCategory categoryDao = new CategoryDaoJdbcImpl();
 		return categoryDao;
 	}
 

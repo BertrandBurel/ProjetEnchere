@@ -10,12 +10,20 @@ import java.util.List;
 
 import fr.eni.enchere.bo.Category;
 import fr.eni.enchere.dal.ConnectionProvider;
-import fr.eni.enchere.dal.DAO;
+import fr.eni.enchere.dal.DAOCategory;
 
-public class CategoryDaoJdbcImpl implements DAO<Category> {
+public class CategoryDaoJdbcImpl implements DAOCategory {
+
+	private final String INSERT_CATEGORY = "INSERT INTO CATEGORIES (libelle) " + "VALUES (?)";
+	private final String SELECT_CATEGORY_BY_ID = "SELECT * FROM CATEGORIES WHERE no_categorie=?";
+	private final String SELECT_CATEGORIES = "SELECT * FROM CATEGORIES";
+	private final String UPDATE_CATEGORY = "UPDATE CATEGORIES SET libelle=? " + "WHERE no_categorie=?";
+	private final String DELETE_CATEGORY = "DELETE CATEGORIES WHERE no_categorie=?";
+	private final String SELECT_CATEGORY_BY_NAME = "SELECT * FROM CATEGORIES WHERE libelle=?";
+
 	@Override
 	public void insert(Category category) {
-		String request = new String("INSERT INTO CATEGORIES (libelle) " + "VALUES (?)");
+		String request = new String(INSERT_CATEGORY);
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 
@@ -43,7 +51,7 @@ public class CategoryDaoJdbcImpl implements DAO<Category> {
 
 	@Override
 	public Category selectById(int index) {
-		String request = new String("SELECT * FROM CATEGORIES WHERE no_categorie=?");
+		String request = new String(SELECT_CATEGORY_BY_ID);
 
 		try {
 			Connection connection = ConnectionProvider.getConnection();
@@ -71,7 +79,7 @@ public class CategoryDaoJdbcImpl implements DAO<Category> {
 
 	@Override
 	public List<Category> selectAll() {
-		String request = new String("SELECT * FROM CATEGORIES");
+		String request = new String(SELECT_CATEGORIES);
 
 		try {
 			Connection connection = ConnectionProvider.getConnection();
@@ -100,7 +108,7 @@ public class CategoryDaoJdbcImpl implements DAO<Category> {
 
 	@Override
 	public void update(Category category) {
-		String request = new String("UPDATE CATEGORIES SET libelle=? " + "WHERE no_categorie=?");
+		String request = new String(UPDATE_CATEGORY);
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 
@@ -121,7 +129,7 @@ public class CategoryDaoJdbcImpl implements DAO<Category> {
 
 	@Override
 	public void delete(int index) {
-		String request = new String("DELETE CATEGORIES WHERE no_categorie=?");
+		String request = new String(DELETE_CATEGORY);
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 
@@ -137,6 +145,34 @@ public class CategoryDaoJdbcImpl implements DAO<Category> {
 			System.err.println("Suppression en BDD échouée");
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Category getCategoryByName(String name) {
+		String request = new String(SELECT_CATEGORY_BY_NAME);
+
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+
+			PreparedStatement statement = connection.prepareStatement(request);
+			statement.setString(1, name);
+
+			ResultSet resultSet = statement.executeQuery();
+
+			Category category = null;
+			if (resultSet.next()) {
+				category = categoryFormatter(resultSet);
+			}
+
+			statement.close();
+			connection.close();
+
+			return category;
+		} catch (SQLException e) {
+			System.err.println("Select par name impossible");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private Category categoryFormatter(ResultSet resultSet) throws SQLException {
