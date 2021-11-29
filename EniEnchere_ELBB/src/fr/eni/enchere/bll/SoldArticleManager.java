@@ -17,4 +17,8 @@ public class SoldArticleManager {
 	public List<SoldArticle> getCurrentAuctions() throws BusinessException {
 		return soldArticleDao.selectCurrentAuctions();
 	}
+
+	public void insertSoldArticle(SoldArticle soldArticle) throws BusinessException {
+		soldArticleDao.insert(soldArticle);
+	}
 }

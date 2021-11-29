@@ -32,7 +32,7 @@
 	            <p class="m-0 text-center text-white"></p>
 	        </div>
 	    </header>
-	    <form class="container" method="post" action="">
+	    <form class="container" method="post" action="selling_register">
 	        <div class="row">
 	        	<!-- <div class="col-3">
 	        		<img></img>
@@ -98,21 +98,21 @@
 			        				<p><fmt:message key="msg_selling_form_road"></fmt:message></p>
 			        			</div>
 			        			<div class="col-8">
-			        				<input type="text" name="road" maxlength="30"/>
+			        				<input type="text" name="road" maxlength="30" value="${user.address}"/>
 			        			</div>
 			        			<!-- Withdrawal postal code -->
 			        			<div class="col-4">
 			        				<p><fmt:message key="msg_selling_form_postal_code"></fmt:message></p>
 			        			</div>
 			        			<div class="col-8">
-			        				<input type="text" name="postal_code" maxlength="15"/>
+			        				<input type="text" name="postal_code" maxlength="15" value="${user.postalCode}"/>
 			        			</div>
 			        			<!-- Withdrawal town -->
 			        			<div class="col-4">
 			        				<p><fmt:message key="msg_selling_form_town"></fmt:message></p>
 			        			</div>
 			        			<div class="col-8">
-			        				<input type="text" name="town" maxlength="30"/>
+			        				<input type="text" name="town" maxlength="30" value="${user.city}"/>
 			        			</div>
 	        				</div>
 	        			</fieldset>

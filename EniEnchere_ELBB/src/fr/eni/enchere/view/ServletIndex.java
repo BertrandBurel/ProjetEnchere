@@ -15,16 +15,19 @@ import fr.eni.enchere.bll.SoldArticleManager;
 import fr.eni.enchere.bo.Category;
 import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.exceptions.BusinessException;
+import fr.eni.enchere.view.obersver.SoldObjectObserver;
 
 /**
  * Provide ressources for the index.jsp displays
  */
 @WebServlet("/index")
-public class ServletIndex extends HttpServlet {
+public class ServletIndex extends HttpServlet implements SoldObjectObserver {
 	private static final long serialVersionUID = 1L;
 
 	CategoryManager categoryManager;
 	SoldArticleManager soldArticleManager;
+	List<Category> categories;
+	List<SoldArticle> currentAuctionList;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -33,6 +36,14 @@ public class ServletIndex extends HttpServlet {
 		super();
 		categoryManager = new CategoryManager();
 		soldArticleManager = new SoldArticleManager();
+		try {
+			categories = categoryManager.getCategories();
+			updateData();
+		} catch (BusinessException e) {
+			// TODO gestion d'exception
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -58,19 +69,21 @@ public class ServletIndex extends HttpServlet {
 
 		// TODO filter results
 
-		try {
-			List<Category> categories = categoryManager.getCategories();
-			List<SoldArticle> currentAuctionList = soldArticleManager.getCurrentAuctions();
-
-			request.setAttribute("categories", categories);
-			request.setAttribute("current_auction_list", currentAuctionList);
-		} catch (BusinessException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
+		request.setAttribute("categories", categories);
+		request.setAttribute("current_auction_list", currentAuctionList);
 
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp");
 		rd.forward(request, response);
 	}
 
+	@Override
+	public void updateData() {
+		try {
+			currentAuctionList = soldArticleManager.getCurrentAuctions();
+		} catch (BusinessException e) {
+			// TODO gestion d'exception
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }
