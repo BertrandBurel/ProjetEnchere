@@ -1,7 +1,6 @@
 package fr.eni.enchere.dal.jdbc;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -63,8 +62,8 @@ public class WithdrawalDaoJdbcImpl implements DAO<Withdrawal> {
 			throws SQLException {
 		statement.setInt(1, withdrawal.getArticle().getId());
 		statement.setString(2, withdrawal.getStreet());
-		statement.setDate(3, Date.valueOf(withdrawal.getPostalCode()));
-		statement.setDate(4, Date.valueOf(withdrawal.getTown()));
+		statement.setString(3, withdrawal.getPostalCode());
+		statement.setString(4, withdrawal.getTown());
 
 		return statement;
 	}

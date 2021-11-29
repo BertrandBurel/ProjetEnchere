@@ -55,22 +55,29 @@ public class ServletSellingRegister extends HttpServlet {
 		Withdrawal withdrawal = new Withdrawal();
 		Category category = new Category();
 
-		withdrawal.setStreet(String.valueOf(request.getAttribute("road")));
-		withdrawal.setPostalCode(String.valueOf(request.getAttribute("postal_code")));
-		withdrawal.setTown(String.valueOf(request.getAttribute("town")));
+		withdrawal.setStreet(request.getParameter("road"));
+		withdrawal.setPostalCode(request.getParameter("postal_code"));
+		withdrawal.setTown(request.getParameter("town"));
 
-		soldArticle.setName(String.valueOf(request.getAttribute("name")));
-		soldArticle.setDescription(String.valueOf(request.getAttribute("description")));
-		soldArticle.setInitialPrice(Integer.valueOf(String.valueOf(request.getAttribute("start_price"))));
-		soldArticle.setAuctionStartDate(LocalDate.parse(String.valueOf(request.getAttribute("start_date"))));
-		soldArticle.setAuctionEndDate(LocalDate.parse(String.valueOf(request.getAttribute("end_date"))));
+		soldArticle.setName(request.getParameter("name"));
+		soldArticle.setDescription(request.getParameter("description"));
+
+		System.out.println(request.getParameter("description"));
+		System.out.println(request.getParameter("start_price"));
+		System.out.println(request.getParameter("start_date"));
+		System.out.println(request.getParameter("end_date"));
+
+		soldArticle.setInitialPrice(Integer.valueOf(request.getParameter("start_price")));
+
+		soldArticle.setAuctionStartDate(LocalDate.parse(request.getParameter("start_date")));
+		soldArticle.setAuctionEndDate(LocalDate.parse(request.getParameter("end_date")));
 
 		HttpSession session = request.getSession();
 		String pseudo = String.valueOf(session.getAttribute("pseudo"));
 
 		try {
 			user = userManager.getUserByPseudo(pseudo);
-			category = categoryManager.getCategoryByName(String.valueOf(request.getAttribute("category_choice")));
+			category = categoryManager.getCategoryByName(request.getParameter("category_choice"));
 			soldArticle.setCategory(category);
 			soldArticle.setUser(user);
 			soldArticleManager.insertSoldArticle(soldArticle);
