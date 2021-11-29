@@ -32,6 +32,11 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-12">
+                	<c:if test="${errorConnect != null}">
+                		<div class="alert alert-danger">
+                			<p class="align-middle">${errorConnect}</p>
+                		</div>
+                	</c:if>
                     <form method="post" action="<%=request.getContextPath()%>/Signin">
                     	<!-- Identifiant -->
                         <div class="form-group row">
@@ -41,7 +46,8 @@
                             <div class="col-7">
                             	<fmt:message key="msg_connect_idplaceholder" var="idPlaceholder"></fmt:message>
                             	<c:set var="userPseudo" value='${requestScope["pseudo"]}' />
-                                <input class="form-control" type="text" id="identifier" placeholder="${idPlaceholder }" <c:if test="${userPseudo}!=null">value="${userPseudo}"</c:if>>
+                                <input class="form-control" type="text" id="identifier" name="identifier" placeholder="${idPlaceholder }" 
+                                		<c:if test="${userPseudo !=null}">value="${userPseudo}"</c:if>>
                             </div>
                         </div>
                         <!-- Mot de passe -->
@@ -52,7 +58,8 @@
                             <div class="col-7">
                             	<fmt:message key="msg_connect_pwdplaceholder" var="pwdPlaceholder"></fmt:message>
                             	<c:set var="userPwd" value='${requestScope["password"]}' />
-                                <input class="form-control" type="password" id="inputPassword" placeholder="${pwdPlaceholder}" <c:if test="${userPwd}!=null">value="${userPwd}"</c:if>>
+                                <input class="form-control" type="password" id="inputPassword" name="inputPassword" 
+                                		placeholder="${pwdPlaceholder}" <c:if test="${userPwd !=null}">value="${userPwd}"</c:if>>
                             </div>
                         </div>
                         <!-- Connexion -->
@@ -60,7 +67,7 @@
                         	<!-- Bouton -->
                             <div class="col-5">
                             	<fmt:message key="msg_connect_button" var="buttonConnect"></fmt:message>
-                                <input type="button" class="connectButton w-100 h-100" value="${buttonConnect }">
+                                <input type="submit" class="connectButton w-100 h-100" value="${buttonConnect }">
                             </div>
                             <!-- Checkbox et lien -->
                             <div class="col-7">
@@ -81,7 +88,7 @@
                         <div class="form-group row my-10 buttonzone">
                             <div class="col-12">
                             	<fmt:message key="msg_connect_createaccount" var="createAccount"></fmt:message>
-                                <input type="button" class="connectButton w-100 h-100" value="${createAccount }">
+                                <input type="submit" class="connectButton w-100 h-100" value="${createAccount }">
                             </div>
                         </div>
                     </form>

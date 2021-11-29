@@ -26,36 +26,52 @@ public class ServletSignin extends HttpServlet {
 	private String userCheck;
        
     /**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		UserManager userManager = new UserManager();
-		User user = null;
+		User user;
+
+		String errorConnect = "Pseudo ou mot de passe incorrect";
 		userPseudoInput = request.getParameter("identifier");
 		userPwdInput = request.getParameter("inputPassword");
 		userCheck = request.getParameter("remmemberMe");
+//		System.out.println("userPseudoInput : " + userPseudoInput);
+//		System.out.println("userPwdInput : " + userPwdInput);
+//		System.out.println("userCheck : " + userCheck);
 		try {
 			if (userPseudoInput.contains("@")) {
 				user = userManager.getUserByEmail(userPseudoInput);
 			} else {
-				user = userManager.getUserByPseudo(userPwdInput);
+				user = userManager.getUserByPseudo(userPseudoInput);
+//				System.out.println("user : " + user.toString());
+//				System.out.println("Pwd : " + user.getPassword());
 			}
-			if (user == null) {
-				String errorConnect = "Pseudo ou mot de passe incorrect";
+			if (user.getId() == 0) {
 				request.setAttribute("errorConnect", errorConnect);
+				if (userPseudoInput != null) {
+					request.setAttribute("pseudo", userPseudoInput);
+				}
+				if (userPseudoInput != null) {
+					request.setAttribute("pasword", userPwdInput);
+				}
 				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/connection.jsp");
 				rd.forward(request, response);
 			} else {
-				if (user.getPassword() == userPwdInput) {
-					session.setAttribute("pseudo", user.getPassword());
+				if (user.getPassword().equals(userPwdInput)) {
+					session.setAttribute("pseudo", user.getPseudonym());
 					if (userCheck != null) {
 						Cookie cookie = new Cookie("pseudo", user.getPseudonym());
 						cookie.setMaxAge(60*5);
 						response.addCookie(cookie);
 					}
-					response.sendRedirect("/WEB-INF/auctionsList.jsp");
+					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/auctionsList.jsp");
+					rd.forward(request, response);
 				} else {
+					request.setAttribute("errorConnect", errorConnect);
+					request.setAttribute("pseudo", userPseudoInput);
+					request.setAttribute("password", userPwdInput);
 					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/connection.jsp");
 					rd.forward(request, response);
 				}
@@ -67,10 +83,10 @@ public class ServletSignin extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 }
