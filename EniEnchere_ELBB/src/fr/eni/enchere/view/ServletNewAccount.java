@@ -8,25 +8,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletSignout
+ * Servlet implementation class ServletNewAccount
  */
-@WebServlet("/signout")
-public class ServletSignout extends HttpServlet {
+@WebServlet("/ServletNewAccount")
+public class ServletNewAccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	/**
+	
+	private String newUserPSeudo;
+	private String newUserLastname;
+	private String newUserFirstname;
+	private String newUserEmail;
+	private String newUserPhone;
+	private String newUserAddress;
+	private String newUserPostalCode;
+	private String newUserCity;
+	private String newUserPassword;
+	private String newUserConfirmPwd;
+       
+    /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().invalidate();
-		response.sendRedirect("/index");
+		doPost(request,response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		if (request.getParameter("cancel") != null) {
+			response.sendRedirect("/index");
+		}
+		if (request.getParameter("create") != null) {
+			newUserPSeudo = request.getParameter("");
+		}
+		
 	}
 
 }

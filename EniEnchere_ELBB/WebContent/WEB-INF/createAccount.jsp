@@ -41,6 +41,7 @@
                     <form method="post" action="">
                         <div class="form-group row">
                             <div class="col-12 col-sm-12 col-md- col-lg-6">
+                            	<!-- Pseudo -->
                                 <div class="row my-2">
                                     <div class="col-5">
                                         <label for="identifier" class="col-form-label">
@@ -48,111 +49,136 @@
                                         </label>
                                     </div>
                                     <div class="col-7">
-                                        <input class="form-control" type="text" id="identifier" placeholder="Pseudo">
+                                    	<fmt:message key="msg_profile_pseudo" var="pseudoPlaceholder"></fmt:message>
+                                        <input class="form-control" type="text" id="identifier" name="identifier" 
+                                        		placeholder="${pseudoPlaceholder}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- Last name -->
                                 <div class="row my-2">
                                     <label for="firstname" class="col-5 col-form-label">
                                     	<fmt:message key="msg_profile_lastname"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="text" id="firstname" placeholder="Nom">
+                                    	<fmt:message key="msg_profile_lastname" var="lastnamePlaceholder"></fmt:message>
+                                        <input class="form-control" type="text" id="lastname" name="lastname" 
+                                        		placeholder="${lastnamePlaceholder}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- First name -->
                                 <div class="row my-2">
                                     <label for="lastname" class="col-5 col-form-label">
                                     	<fmt:message key="msg_profile_firstname"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="text" id="lastname" placeholder="Prénom">
+                                    	<fmt:message key="msg_profile_firstname" var="firstnamePlaceholder"></fmt:message>
+                                        <input class="form-control" type="text" id="firstname" name="firstname" 
+                                        		placeholder="${firstnamePlaceholder}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- Email -->
                                 <div class="row my-2">
                                     <label for="email" class="col-5 col-form-label">
                                     	<fmt:message key="msg_profile_email"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="email" id="email" placeholder="email">
+                                    	<fmt:message key="msg_profile_email" var="emailPlaceholder"></fmt:message>
+                                        <input class="form-control" type="email" id="email" name="email" 
+                                        		placeholder="${emailPlaceholder}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- Phone -->
                                 <div class="row my-2">
                                     <label for="phonenumber" class="col-5 col-form-label">
                                     	<fmt:message key="msg_profile_phone"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="text" id="phonenumber"
-                                            placeholder="Téléphone">
+                                    	<fmt:message key="msg_profile_phone" var="phonePlaceholder"></fmt:message>
+                                        <input class="form-control" type="text" id="phonenumber" name="phone"
+                                            	placeholder="${phonePlaceholder}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- Address -->
                                 <div class="row my-2">
                                     <label for="address" class="col-5 col-form-label">
                                     	<fmt:message key="msg_profile_address"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="text" id="address" placeholder="Adresse">
+                                    	<fmt:message key="msg_profile_address" var="addressPlaceholder"></fmt:message>
+                                        <input class="form-control" type="text" id="address" name="address" 
+                                        		placeholder="${addressPlaceholder}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- Postal code -->
                                 <div class="row my-2">
                                     <label for="postalcode" class="col-5 col-form-label">
                                     	<fmt:message key="msg_profile_postal_code"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="text" id="postalcode"
-                                            placeholder="Code postal">
+                                    	<fmt:message key="msg_profile_postal_code" var="postalCodePlaceholder"></fmt:message>
+                                        <input class="form-control" type="text" id="postalcode" name="postalcode" 
+                                            	placeholder="Code postal">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- City -->
                                 <div class="row my-2">
                                     <label for="city" class="col-5 col-form-label">
                                     	<fmt:message key="msg_profile_city"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="text" id="city" placeholder="Ville">
+                                    	<fmt:message key="msg_profile_city" var="cityPlaceholder"></fmt:message>
+                                        <input class="form-control" type="text" id="city" name="city" 
+                                        		placeholder="${cityPlaceholder}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- Password -->
                                 <div class="row my-2">
                                     <label for="inputPassword" class="col-5 col-form-label">
                                     	<fmt:message key="msg_connect_password"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="password" id="inputPassword"
-                                            placeholder="Mot de passe">
+                                    	<fmt:message key="msg_connect_password" var="pwdPlaceholder"></fmt:message>
+                                        <input class="form-control" type="password" id="inputPassword" name="password"
+                                            	placeholder="${pwdPlaceholder}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            	<!-- Confirm Password -->
                                 <div class="row my-2">
                                     <label for="confirmPassword" class="col-5 col-form-label">
                                     	<fmt:message key="msg_create_account_confirm"></fmt:message>
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control" type="password" id="confirmPassword"
-                                            placeholder="Confirmation">
+                                    	<fmt:message key="msg_create_account_confirm_password" var="confirmPwdPlaceholder"></fmt:message>
+                                        <input class="form-control" type="password" id="${confirmPwdPlaceholder}" name="confirmpassword"
+                                            	placeholder="Confirmation">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row my-10 justify-content-center buttonzone">
                             <div class="col-5">
-                                <input type="button" class="createButton w-100 h-100" value="Créer">
+                                <input type="submit" class="createButton w-100 h-100" name="create" value="Créer">
                             </div>
                             <div class="offset-col-2 col-5">
-                                <input type="button" class="cancelButton w-100 h-100" value="Annuler">
+                                <input type="submit" class="cancelButton w-100 h-100" name="cancel" value="Annuler">
                             </div>
                         </div>
                     </form>

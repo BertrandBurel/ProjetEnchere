@@ -84,7 +84,7 @@
                         </div>
                     </form>
                     <!-- Bouton création compte -->
-                    <form method="post" action="">
+                    <form method="post" action="<%=request.getContextPath()%>/createAccount">
                         <div class="form-group row my-10 buttonzone">
                             <div class="col-12">
                             	<fmt:message key="msg_connect_createaccount" var="createAccount"></fmt:message>
