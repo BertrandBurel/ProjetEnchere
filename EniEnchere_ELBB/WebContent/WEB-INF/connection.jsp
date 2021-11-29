@@ -37,7 +37,7 @@
                 			<p class="align-middle">${errorConnect}</p>
                 		</div>
                 	</c:if>
-                    <form method="post" action="<%=request.getContextPath()%>/Signin">
+                    <form method="post" action="<%=request.getContextPath()%>/signin">
                     	<!-- Identifiant -->
                         <div class="form-group row">
                             <label for="identifier" class="col-5 col-form-label">

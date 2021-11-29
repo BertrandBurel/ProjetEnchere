@@ -17,7 +17,7 @@ import fr.eni.enchere.bo.User;
 /**
  * Servlet implementation class ServletSignin
  */
-@WebServlet("/Signin")
+@WebServlet("/signin")
 public class ServletSignin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -49,7 +49,7 @@ public class ServletSignin extends HttpServlet {
 					request.setAttribute("pseudo", userPseudoInput);
 				}
 				if (userPseudoInput != null) {
-					request.setAttribute("pasword", userPwdInput);
+					request.setAttribute("password", userPwdInput);
 				}
 				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/connection.jsp");
 				rd.forward(request, response);
