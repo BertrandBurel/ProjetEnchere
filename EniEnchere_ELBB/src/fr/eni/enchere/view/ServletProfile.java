@@ -16,7 +16,7 @@ import fr.eni.enchere.exceptions.BusinessException;
 /**
  * Servlet implementation class ServletProfile
  */
-@WebServlet("/ServletProfile")
+@WebServlet("/profile")
 public class ServletProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

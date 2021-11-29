@@ -18,7 +18,7 @@ import fr.eni.enchere.exceptions.BusinessException;
 /**
  * Servlet implementation class ServletToConnection
  */
-@WebServlet("/ServletToConnection")
+@WebServlet("/connection")
 public class ServletToConnection extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
