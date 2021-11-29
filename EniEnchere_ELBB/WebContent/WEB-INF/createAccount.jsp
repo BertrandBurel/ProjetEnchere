@@ -11,9 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!-- Custom css for this template -->
-    <link href="createAccount.css" rel="stylesheet">
-    <!-- Custom font for this template -->
-    <link href="" rel="stylesheet">
+    <link href="css/createAccount.css" rel="stylesheet">
     <title><fmt:message key="msg_create_account_title"></fmt:message></title>
 </head>
 
@@ -50,8 +48,8 @@
                                     </div>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_pseudo" var="pseudoPlaceholder"></fmt:message>
-                                        <input class="form-control" type="text" id="identifier" name="identifier" 
-                                        		placeholder="${pseudoPlaceholder}">
+                                        <input class="form-control" type="text" id="identifier" name="identifier" maxlength="30"
+                                        		pattern="^[a-zA-Z0-9]*$" placeholder="${pseudoPlaceholder}">
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +61,7 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_lastname" var="lastnamePlaceholder"></fmt:message>
-                                        <input class="form-control" type="text" id="lastname" name="lastname" 
+                                        <input class="form-control" type="text" id="lastname" name="lastname" maxlength="30" 
                                         		placeholder="${lastnamePlaceholder}">
                                     </div>
                                 </div>
@@ -76,7 +74,7 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_firstname" var="firstnamePlaceholder"></fmt:message>
-                                        <input class="form-control" type="text" id="firstname" name="firstname" 
+                                        <input class="form-control" type="text" id="firstname" name="firstname" maxlength="30" 
                                         		placeholder="${firstnamePlaceholder}">
                                     </div>
                                 </div>
@@ -90,7 +88,7 @@
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_email" var="emailPlaceholder"></fmt:message>
                                         <input class="form-control" type="email" id="email" name="email" 
-                                        		placeholder="${emailPlaceholder}">
+                                        		pattern="[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="${emailPlaceholder}">
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +100,7 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_phone" var="phonePlaceholder"></fmt:message>
-                                        <input class="form-control" type="text" id="phonenumber" name="phone"
+                                        <input class="form-control" type="text" id="phonenumber" name="phone" pattern="^0[1-9][0-9]{8}$" 
                                             	placeholder="${phonePlaceholder}">
                                     </div>
                                 </div>
@@ -115,7 +113,7 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_address" var="addressPlaceholder"></fmt:message>
-                                        <input class="form-control" type="text" id="address" name="address" 
+                                        <input class="form-control" type="text" id="address" name="address" maxlength="30" 
                                         		placeholder="${addressPlaceholder}">
                                     </div>
                                 </div>
@@ -128,8 +126,8 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_postal_code" var="postalCodePlaceholder"></fmt:message>
-                                        <input class="form-control" type="text" id="postalcode" name="postalcode" 
-                                            	placeholder="Code postal">
+                                        <input class="form-control" type="text" id="postalcode" name="postalcode" maxlength="10" 
+                                            	pattern="(([0-8][0-9])|(9[0-5]))[0-9]{3}$" placeholder="Code postal">
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +139,7 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_city" var="cityPlaceholder"></fmt:message>
-                                        <input class="form-control" type="text" id="city" name="city" 
+                                        <input class="form-control" type="text" id="city" name="city" maxlength="30"
                                         		placeholder="${cityPlaceholder}">
                                     </div>
                                 </div>
@@ -154,7 +152,7 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_connect_password" var="pwdPlaceholder"></fmt:message>
-                                        <input class="form-control" type="password" id="inputPassword" name="password"
+                                        <input class="form-control" type="password" id="inputPassword" name="password" maxlength="30"
                                             	placeholder="${pwdPlaceholder}">
                                     </div>
                                 </div>
@@ -168,7 +166,7 @@
                                     <div class="col-7">
                                     	<fmt:message key="msg_create_account_confirm_password" var="confirmPwdPlaceholder"></fmt:message>
                                         <input class="form-control" type="password" id="${confirmPwdPlaceholder}" name="confirmpassword"
-                                            	placeholder="Confirmation">
+                                            	maxlength="30" placeholder="Confirmation">
                                     </div>
                                 </div>
                             </div>
