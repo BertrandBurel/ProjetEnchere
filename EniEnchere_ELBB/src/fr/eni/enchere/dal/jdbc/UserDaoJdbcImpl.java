@@ -190,4 +190,15 @@ public class UserDaoJdbcImpl implements DAOUser {
 		return user;
 	}
 
+	@Override
+	public Boolean validateUnicityPseusoEmail(String pseudo, String email) throws BusinessException {
+		boolean isValidate = false;
+		if (selectByPseudo(pseudo).getId() == 0 || selectByEmail(email).getId() == 0) {
+			isValidate = false;
+		} else {
+			isValidate = true;
+		}
+		return isValidate;
+	}
+
 }

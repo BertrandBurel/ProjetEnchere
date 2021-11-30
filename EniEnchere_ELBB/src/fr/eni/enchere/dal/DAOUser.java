@@ -7,5 +7,6 @@ public interface DAOUser extends DAO<User> {
 
 	User selectByPseudo(String pseudo) throws BusinessException;
 	User selectByEmail(String email) throws BusinessException;
+	Boolean validateUnicityPseusoEmail(String pseudo, String email) throws BusinessException;
 	
 }
