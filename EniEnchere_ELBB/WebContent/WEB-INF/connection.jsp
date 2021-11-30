@@ -37,7 +37,7 @@
                 			<p class="align-middle">${errorConnect}</p>
                 		</div>
                 	</c:if>
-                    <form method="post" action="<%=request.getContextPath()%>/Signin">
+                    <form method="post" action="<%=request.getContextPath()%>/signin">
                     	<!-- Identifiant -->
                         <div class="form-group row">
                             <label for="identifier" class="col-5 col-form-label">
@@ -84,7 +84,7 @@
                         </div>
                     </form>
                     <!-- Bouton création compte -->
-                    <form method="post" action="">
+                    <form method="post" action="<%=request.getContextPath()%>/createAccount">
                         <div class="form-group row my-10 buttonzone">
                             <div class="col-12">
                             	<fmt:message key="msg_connect_createaccount" var="createAccount"></fmt:message>

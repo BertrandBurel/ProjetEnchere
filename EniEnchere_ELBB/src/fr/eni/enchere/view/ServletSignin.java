@@ -17,7 +17,7 @@ import fr.eni.enchere.bo.User;
 /**
  * Servlet implementation class ServletSignin
  */
-@WebServlet("/Signin")
+@WebServlet("/signin")
 public class ServletSignin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -37,16 +37,11 @@ public class ServletSignin extends HttpServlet {
 		userPseudoInput = request.getParameter("identifier");
 		userPwdInput = request.getParameter("inputPassword");
 		userCheck = request.getParameter("remmemberMe");
-//		System.out.println("userPseudoInput : " + userPseudoInput);
-//		System.out.println("userPwdInput : " + userPwdInput);
-//		System.out.println("userCheck : " + userCheck);
 		try {
 			if (userPseudoInput.contains("@")) {
 				user = userManager.getUserByEmail(userPseudoInput);
 			} else {
 				user = userManager.getUserByPseudo(userPseudoInput);
-//				System.out.println("user : " + user.toString());
-//				System.out.println("Pwd : " + user.getPassword());
 			}
 			if (user.getId() == 0) {
 				request.setAttribute("errorConnect", errorConnect);
@@ -54,7 +49,7 @@ public class ServletSignin extends HttpServlet {
 					request.setAttribute("pseudo", userPseudoInput);
 				}
 				if (userPseudoInput != null) {
-					request.setAttribute("pasword", userPwdInput);
+					request.setAttribute("password", userPwdInput);
 				}
 				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/connection.jsp");
 				rd.forward(request, response);
