@@ -9,23 +9,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.CategoryManager;
 import fr.eni.enchere.bll.SoldArticleManager;
+import fr.eni.enchere.bll.UserManager;
 import fr.eni.enchere.bo.Category;
 import fr.eni.enchere.bo.SoldArticle;
+import fr.eni.enchere.bo.User;
 import fr.eni.enchere.exceptions.BusinessException;
-import fr.eni.enchere.view.obersver.SoldObjectObserver;
 
 /**
  * Provide ressources for the index.jsp displays
  */
 @WebServlet("/index")
-public class ServletIndex extends HttpServlet implements SoldObjectObserver {
+public class ServletIndex extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	CategoryManager categoryManager;
 	SoldArticleManager soldArticleManager;
+	UserManager userManager;
 	List<Category> categories;
 	List<SoldArticle> currentAuctionList;
 
@@ -36,9 +39,9 @@ public class ServletIndex extends HttpServlet implements SoldObjectObserver {
 		super();
 		categoryManager = new CategoryManager();
 		soldArticleManager = new SoldArticleManager();
+		userManager = new UserManager();
 		try {
 			categories = categoryManager.getCategories();
-			updateData();
 		} catch (BusinessException e) {
 			// TODO gestion d'exception
 			System.out.println(e.getMessage());
@@ -52,22 +55,27 @@ public class ServletIndex extends HttpServlet implements SoldObjectObserver {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doPost(request, response);
-	}
+		HttpSession session = request.getSession();
+		User user = null;
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String category = new String();
+		try {
+			String pseudo = String.valueOf(session.getAttribute("pseudo"));
 
-		if (request.getParameter("category_choice") != null) {
-			category = request.getParameter("category_choice");
+			// tests
+			pseudo = "VikingBreton";
+			// tests
+
+			if (!pseudo.equals("null")) {
+				user = userManager.getUserByPseudo(pseudo);
+			}
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (user != null) {
+				request.setAttribute("connected", "true");
+			}
 		}
-
-		// TODO filter results
 
 		request.setAttribute("categories", categories);
 		request.setAttribute("current_auction_list", currentAuctionList);
@@ -76,14 +84,21 @@ public class ServletIndex extends HttpServlet implements SoldObjectObserver {
 		rd.forward(request, response);
 	}
 
-	@Override
-	public void updateData() {
-		try {
-			currentAuctionList = soldArticleManager.getCurrentAuctions();
-		} catch (BusinessException e) {
-			// TODO gestion d'exception
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String category = new String();
+
+		if (request.getParameter("category_choice") != null) {
+			category = request.getParameter("category_choice");
 		}
+
+		// TODO filter results
+
+		doGet(request, response);
 	}
 }

@@ -62,11 +62,6 @@ public class ServletSellingRegister extends HttpServlet {
 		soldArticle.setName(request.getParameter("name"));
 		soldArticle.setDescription(request.getParameter("description"));
 
-		System.out.println(request.getParameter("description"));
-		System.out.println(request.getParameter("start_price"));
-		System.out.println(request.getParameter("start_date"));
-		System.out.println(request.getParameter("end_date"));
-
 		soldArticle.setInitialPrice(Integer.valueOf(request.getParameter("start_price")));
 
 		soldArticle.setAuctionStartDate(LocalDate.parse(request.getParameter("start_date")));
@@ -88,5 +83,7 @@ public class ServletSellingRegister extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+
+		response.sendRedirect("index");
 	}
 }
