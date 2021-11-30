@@ -30,7 +30,6 @@ public class ServletIndex extends HttpServlet {
 	SoldArticleManager soldArticleManager;
 	UserManager userManager;
 	List<Category> categories;
-	List<SoldArticle> currentAuctionList;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -55,19 +54,28 @@ public class ServletIndex extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		HttpSession session = request.getSession();
 		User user = null;
 
-		try {
-			String pseudo = String.valueOf(session.getAttribute("pseudo"));
+		// test
+		session.setAttribute("pseudo", "VikingBreton");
+		// test
 
-			// tests
-			pseudo = "VikingBreton";
-			// tests
+		try {
+
+			String pseudo = String.valueOf(session.getAttribute("pseudo"));
 
 			if (!pseudo.equals("null")) {
 				user = userManager.getUserByPseudo(pseudo);
 			}
+
+			if (request.getAttribute("article_list") == null) {
+				List<SoldArticle> articleList = null;
+				articleList = soldArticleManager.getAuctions(0, null, 0, 0, user.getId());
+				request.setAttribute("article_list", articleList);
+			}
+
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,7 +86,6 @@ public class ServletIndex extends HttpServlet {
 		}
 
 		request.setAttribute("categories", categories);
-		request.setAttribute("current_auction_list", currentAuctionList);
 
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp");
 		rd.forward(request, response);
@@ -91,13 +98,74 @@ public class ServletIndex extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String category = new String();
+		String categoryName = null;
+		int categoryId = 0;
+		String research = null;
+
+		// Can be 0: all, 1: sell or 2: buy
+		int mode = 0;
+
+		// By selecting filters, the user add 1 for open auctions, 2 for ongoing auction
+		// and 4 for closed auction. The result between 0 and 7 determine the filter
+		// starting dates and ending date. 0 is the default value, the result is the
+		// disconnected one: only current auctions.
+		int filters = 0;
+		HttpSession session = request.getSession();
+		String pseudo = String.valueOf(session.getAttribute("pseudo"));
+		User user = null;
+		List<SoldArticle> articleList = null;
 
 		if (request.getParameter("category_choice") != null) {
-			category = request.getParameter("category_choice");
+			categoryName = request.getParameter("category_choice");
+			for (Category category : categories) {
+				if (category.getName().equals(categoryName)) {
+					categoryId = category.getId();
+				}
+			}
 		}
 
-		// TODO filter results
+		if (request.getParameter("search_string") != null) {
+			research = request.getParameter("search_string");
+		}
+
+		if (request.getParameter("auction_type") != null) {
+			if (request.getParameter("auction_type").equals("buy")) {
+				mode = 2;
+				if (request.getParameter("open_auctions") != null) {
+					filters += 1;
+				}
+				if (request.getParameter("ongoing_auctions") != null) {
+					filters += 2;
+				}
+				if (request.getParameter("won_auctions") != null) {
+					filters += 4;
+				}
+			} else if (request.getParameter("auction_type").equals("sell")) {
+				mode = 1;
+				if (request.getParameter("open_sells") != null) {
+					filters += 1;
+				}
+				if (request.getParameter("ongoing_sells") != null) {
+					filters += 2;
+				}
+				if (request.getParameter("closed_sells") != null) {
+					filters += 4;
+				}
+			}
+		}
+
+		try {
+			if (!pseudo.equals("null")) {
+				user = userManager.getUserByPseudo(pseudo);
+			}
+
+			articleList = soldArticleManager.getAuctions(categoryId, research, mode, filters, user.getId());
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		request.setAttribute("article_list", articleList);
 
 		doGet(request, response);
 	}

@@ -21,8 +21,18 @@ import fr.eni.enchere.exceptions.BusinessException;
 public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 
 	private final String SELECT_ARTICLES_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
-	private final String SELECT_ARTICLES_BY_DATES = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres <= CAST(CURRENT_TIMESTAMP AS DATE) AND date_fin_encheres >= CAST(CURRENT_TIMESTAMP AS DATE) ORDER BY date_fin_encheres ASC";
 	private final String INSERT_ARTICLES = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	private final String SELECT_ARTICLES = "SELECT * FROM ARTICLES_VENDUS";
+	private final String FILTERS_CATEGORY = "no_categorie = ?";
+	private final String FILTERS_STRING = "nom_article LIKE ?";
+	private final String DATES_OPEN_AUCTION = "date_debut_encheres > CAST(CURRENT_TIMESTAMP AS DATE)";
+	private final String DATES_ONGOING_AUCTION = "date_debut_encheres <= CAST(CURRENT_TIMESTAMP AS DATE) AND date_fin_encheres >= CAST(CURRENT_TIMESTAMP AS DATE)";
+	private final String DATE_CLOSED_AUCTION = "date_fin_encheres < CAST(CURRENT_TIMESTAMP AS DATE)";
+	private final String FILTER_MODE_SELL = "no_utilisateur = ?";
+	private final String FILTER_MODE_BUY = "no_utilisateur != ?";
+	private final String WHERE = " WHERE ";
+	private final String AND = " AND ";
+	private final String ORDER_BY_DATE = " ORDER BY date_fin_encheres ASC";
 
 	@Override
 	public void insert(SoldArticle soldArticle) {
@@ -102,13 +112,80 @@ public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 	}
 
 	@Override
-	public List<SoldArticle> selectCurrentAuctions() {
-		String request = new String(SELECT_ARTICLES_BY_DATES);
+	public List<SoldArticle> selectAuctions(int category, String research, int mode, int filters, int userId) {
+		String request = new String();
+		StringBuffer requestBuffer = new StringBuffer(SELECT_ARTICLES);
+
+		switch (filters) {
+		case 1: // open
+			requestBuffer.append(WHERE + DATES_OPEN_AUCTION);
+			break;
+		case 2: // ongoing
+			requestBuffer.append(WHERE + DATES_ONGOING_AUCTION);
+			break;
+		case 3: // open + ongoing
+			requestBuffer.append(WHERE + "(" + DATES_ONGOING_AUCTION + " OR " + DATES_OPEN_AUCTION + ")");
+			break;
+		case 4: // closed
+			requestBuffer.append(WHERE + DATE_CLOSED_AUCTION);
+			break;
+		case 5: // open + closed
+			requestBuffer.append(WHERE + "(" + DATE_CLOSED_AUCTION + " OR " + DATES_OPEN_AUCTION + ")");
+			break;
+		case 6: // ongoing + closed
+			requestBuffer.append(WHERE + "(" + DATES_ONGOING_AUCTION + " OR " + DATE_CLOSED_AUCTION + ")");
+			break;
+		case 7: // all
+			requestBuffer.append(WHERE + "(" + DATES_ONGOING_AUCTION + " OR " + DATES_OPEN_AUCTION + " OR "
+					+ DATES_OPEN_AUCTION + ")");
+			break;
+		default: // default: ongoing auction list
+			requestBuffer.append(WHERE + DATES_ONGOING_AUCTION);
+			break;
+		}
+
+		if (mode == 1) {
+			requestBuffer.append(AND + FILTER_MODE_SELL);
+		} else if (mode == 2) {
+			requestBuffer.append(AND + FILTER_MODE_BUY);
+		} // default: no mode, everything is selected
+
+		// category 0 = all categories
+		if (category != 0) {
+			requestBuffer.append(AND + FILTERS_CATEGORY);
+		}
+
+		// research null = no research String
+		if (research != null) {
+			requestBuffer.append(AND + FILTERS_STRING);
+		}
+
+		requestBuffer.append(ORDER_BY_DATE);
+
+		request = requestBuffer.toString();
 
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = connection.prepareStatement(request);
+
+			int paramNumber = 1;
+
+			if (mode != 0) {
+				statement.setInt(paramNumber, userId);
+				paramNumber++;
+			}
+
+			if (category != 0) {
+				statement.setInt(paramNumber, category);
+				paramNumber++;
+			}
+
+			if (research != null) {
+				statement.setString(paramNumber, "%" + research + "%");
+			}
+
+			System.out.println(request);
 
 			ResultSet resultSet = statement.executeQuery();
 

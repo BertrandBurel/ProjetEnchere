@@ -37,7 +37,7 @@
 					</div>
 					<!-- Buy fields -->
 					<div class="col-6">
-						<input type="radio" name="auction_type" id="auction_buy"/>
+						<input type="radio" name="auction_type" id="auction_buy" value="buy"/>
 						<label for="auction_buy"><fmt:message key="msg_index_search_purchase"></fmt:message></label>
 						<div class="row">
 							<div class="col-12">
@@ -56,7 +56,7 @@
 					</div>
 					<!-- Sell fields -->
 					<div class="col-6">
-						<input type="radio" name="auction_type" id="auction_sell"/>
+						<input type="radio" name="auction_type" id="auction_sell" value="sell"/>
 						<label for="auction_sell"><fmt:message key="msg_index_search_sells"></fmt:message></label>
 						<div class="row">
 							<div class="col-12">

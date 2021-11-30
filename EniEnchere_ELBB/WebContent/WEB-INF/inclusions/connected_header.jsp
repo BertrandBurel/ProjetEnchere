@@ -21,16 +21,19 @@
 	                <div class="col-6 text-white">
 	                	<div class="row">
 	                		<div class="col-3 text-white">
+	                			<!-- auction list -->
 			            		<a href="<%=request.getContextPath()%>/index"><fmt:message key="msg_index_auctions_list"></fmt:message></a>
 			            	</div>
 	                		<div class="col-3 text-white">
+	                			<!-- selling page -->
 			            		<a href="<%=request.getContextPath()%>/selling"><fmt:message key="msg_index_sell_article"></fmt:message></a>
 			            	</div>
 	                		<div class="col-3 text-white">
-	                			<!-- TODO -->
-			            		<a href="<%=request.getContextPath()%>/404"><fmt:message key="msg_index_profile"></fmt:message></a>
+	                			<!-- profile -->
+			            		<a href="<%=request.getContextPath()%>/profile"><fmt:message key="msg_index_profile"></fmt:message></a>
 			            	</div>
 	                		<div class="col-3 text-white">
+	                			<!-- Sign out -->
 			            		<a href="<%=request.getContextPath()%>/ServletSignout"><fmt:message key="msg_index_disconnexion"></fmt:message></a>
 			            	</div>
 		            	</div>

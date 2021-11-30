@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,13 +49,6 @@ public class ServletSellingCall extends HttpServlet {
 		UserManager userManager = new UserManager();
 
 		HttpSession session = request.getSession();
-
-		// tests
-		session.setAttribute("pseudo", "VikingBreton");
-		Cookie cookie = new Cookie("pseudo", "VikingBreton");
-		cookie.setMaxAge(60 * 5);
-		response.addCookie(cookie);
-		// tests
 
 		String pseudo = String.valueOf(session.getAttribute("pseudo"));
 
