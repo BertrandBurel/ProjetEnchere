@@ -61,8 +61,7 @@ public class ServletSignin extends HttpServlet {
 						cookie.setMaxAge(60*5);
 						response.addCookie(cookie);
 					}
-					RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/auctionsList.jsp");
-					rd.forward(request, response);
+					response.sendRedirect(request.getContextPath() + "/index");
 				} else {
 					request.setAttribute("errorConnect", errorConnect);
 					request.setAttribute("pseudo", userPseudoInput);
