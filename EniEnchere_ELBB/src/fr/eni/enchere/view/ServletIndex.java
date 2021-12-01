@@ -58,10 +58,6 @@ public class ServletIndex extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = null;
 
-		// test
-		session.setAttribute("pseudo", "VikingBreton");
-		// test
-
 		try {
 
 			String pseudo = String.valueOf(session.getAttribute("pseudo"));
@@ -72,7 +68,12 @@ public class ServletIndex extends HttpServlet {
 
 			if (request.getAttribute("article_list") == null) {
 				List<SoldArticle> articleList = null;
-				articleList = soldArticleManager.getAuctions(0, null, 0, 0, user.getId());
+				if (user != null) {
+					articleList = soldArticleManager.getAuctions(0, null, 0, 0, user.getId());
+				} else {
+					// userId = 0 is "no user", since mode = 0, user will never be tested
+					articleList = soldArticleManager.getAuctions(0, null, 0, 0, 0);
+				}
 				request.setAttribute("article_list", articleList);
 			}
 
@@ -98,7 +99,7 @@ public class ServletIndex extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String categoryName = null;
+		String categoryParam = null;
 		int categoryId = 0;
 		String research = null;
 
@@ -116,12 +117,8 @@ public class ServletIndex extends HttpServlet {
 		List<SoldArticle> articleList = null;
 
 		if (request.getParameter("category_choice") != null) {
-			categoryName = request.getParameter("category_choice");
-			for (Category category : categories) {
-				if (category.getName().equals(categoryName)) {
-					categoryId = category.getId();
-				}
-			}
+			categoryParam = request.getParameter("category_choice");
+			categoryId = Integer.valueOf(categoryParam);
 		}
 
 		if (request.getParameter("search_string") != null) {
@@ -159,7 +156,12 @@ public class ServletIndex extends HttpServlet {
 				user = userManager.getUserByPseudo(pseudo);
 			}
 
-			articleList = soldArticleManager.getAuctions(categoryId, research, mode, filters, user.getId());
+			if (user != null) {
+				articleList = soldArticleManager.getAuctions(categoryId, research, mode, filters, user.getId());
+			} else {
+				// userId = 0 is "no user", since mode = 0, user will never be tested
+				articleList = soldArticleManager.getAuctions(categoryId, research, 0, filters, 0);
+			}
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

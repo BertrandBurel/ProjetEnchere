@@ -22,8 +22,7 @@ public interface DAOSoldArticle extends DAO<SoldArticle> {
 	 *            number return the ongoing list by default.
 	 * @param userId
 	 *            Current user Id
-	 * @return Article list. The soldPrice is set to the actual price based on the
-	 *         last bid. (initialPrice if no bid)
+	 * @return Article list
 	 * @throws BusinessException
 	 */
 	public List<SoldArticle> selectAuctions(int category, String research, int mode, int filters, int userId);

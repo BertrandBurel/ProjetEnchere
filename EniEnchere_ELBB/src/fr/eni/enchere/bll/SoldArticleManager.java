@@ -1,11 +1,13 @@
 package fr.eni.enchere.bll;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.DAOSoldArticle;
 import fr.eni.enchere.exceptions.BusinessException;
+import fr.eni.enchere.utils.Utils;
 
 public class SoldArticleManager {
 	private DAOSoldArticle soldArticleDao;
@@ -29,16 +31,36 @@ public class SoldArticleManager {
 	 *            number return the ongoing list by default.
 	 * @param userId
 	 *            Current user Id
-	 * @return Article list. The soldPrice is set to the actual price based on the
-	 *         last bid. (initialPrice if no bid)
+	 * @return Article list
 	 * @throws BusinessException
 	 */
 	public List<SoldArticle> getAuctions(int category, String research, int mode, int filters, int userId)
 			throws BusinessException {
-		return soldArticleDao.selectAuctions(category, research, mode, filters, userId);
+		if (research == null) {
+			return soldArticleDao.selectAuctions(category, research, mode, filters, userId);
+		}
+
+		if (Pattern.matches(Utils.REGEX_TEXT, research)) {
+			return soldArticleDao.selectAuctions(category, research, mode, filters, userId);
+		} else {
+			throw new BusinessException();
+		}
 	}
 
 	public void insertSoldArticle(SoldArticle soldArticle) throws BusinessException {
-		soldArticleDao.insert(soldArticle);
+		boolean valid = true;
+		if (Pattern.matches(Utils.REGEX_TEXT, soldArticle.getName())) {
+			if (Pattern.matches(Utils.REGEX_TEXT, soldArticle.getDescription())) {
+				soldArticleDao.insert(soldArticle);
+			} else {
+				valid = false;
+			}
+		} else {
+			valid = false;
+		}
+
+		if (!valid) {
+			throw new BusinessException();
+		}
 	}
 }

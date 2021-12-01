@@ -26,7 +26,7 @@
 						<select class="form-select form-control" name="category_choice">
 							<option selected value=""><fmt:message key="msg_index_category_choice"></fmt:message></option>
 							<c:forEach items="${categories}" var="category">
-							    <option value="${category.name}">${category.name}</option>
+							    <option value="${category.id}">${category.name}</option>
 							</c:forEach>
 						</select>
 					</div>
