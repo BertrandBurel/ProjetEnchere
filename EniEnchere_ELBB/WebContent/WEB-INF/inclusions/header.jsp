@@ -20,7 +20,7 @@
 	                </div>
 	                <!-- inscription/connection links -->
 	                <div class="col-3 text-white">
-			            <a href="<%=request.getContextPath()%>/createAccount"><fmt:message key="msg_index_inscription"></fmt:message></a>
+			            <a href="<%=request.getContextPath()%>/create_account"><fmt:message key="msg_index_inscription"></fmt:message></a>
 			            <a href="<%=request.getContextPath()%>/connection"><fmt:message key="msg_index_connexion"></fmt:message></a>
 		            </div>
 	            </div>
