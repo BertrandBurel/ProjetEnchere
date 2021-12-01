@@ -24,7 +24,7 @@ public class BusinessException extends Exception {
 		return this.listErrorCodes.size() > 0;
 	}
 
-	public List<Integer> getListErrorCodesr() {
+	public List<Integer> getListErrorCodes() {
 		return this.listErrorCodes;
 	}
 }

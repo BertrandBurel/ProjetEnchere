@@ -18,7 +18,7 @@ public class Utils {
 	 // only numerical + alphabetical + accentuation characters and ' , - _
 	 public static final String REGEX_ADDRESS = "^[\\w'\\-,]*[^._!¡?÷?¿\\/\\\\+=@#$%ˆ&*(){}|~<>;:\\[\\]]*$";
 	 // only numerical characters min : 5  max : 10
-	 public static final String REGEX_POSTAL_CODE = "^[1-9][0-9]{4,9}$";
+	 public static final String REGEX_POSTAL_CODE = "[0-9]{5}";
 	 // only numerical + alphabetical characters and - * ! @ #
 	 public static final String REGEX_PASSWORD = "[a-zA-Z0-9-*!@#]{1,30}$";
 	 
