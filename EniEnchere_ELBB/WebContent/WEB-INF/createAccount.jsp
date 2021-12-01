@@ -109,7 +109,7 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_email" var="emailPlaceholder"></fmt:message>
-                                        <input class="form-control" type="email" id="email" name="email" 
+                                        <input class="form-control" type="email" id="email" name="email" maxlength="20" 
                                         		pattern="[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
                                         		placeholder="${emailPlaceholder}" 
                                         		<c:if test="${!empty userEmail}">value="${userEmail}"</c:if>

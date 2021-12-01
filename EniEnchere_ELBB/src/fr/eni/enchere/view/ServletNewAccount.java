@@ -64,7 +64,6 @@ public class ServletNewAccount extends HttpServlet {
 					0,
 					false
 					);
-			System.out.println(user.toString());
 			
 			try {
 				businessException = userManager.validateNewAccount(user);
@@ -90,10 +89,9 @@ public class ServletNewAccount extends HttpServlet {
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/createAccount.jsp");
 					rd.forward(request, response);
 				} else {
-//					userManager.setNewUser(user);
-//					session.setAttribute("pseudo", user.getPseudonym());
-//					response.sendRedirect("");
-					user.toString();
+					userManager.setNewUser(user);
+					session.setAttribute("pseudo", user.getPseudonym());
+					response.sendRedirect("");
 				}
 			} catch (BusinessException e) {
 				e.printStackTrace();
