@@ -8,6 +8,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!-- Custom css for this template -->
@@ -16,6 +17,9 @@
 </head>
 
 <body>
+	<!--<fmt:setLocale value="${!empty sessionScope.langue?sessionScope.langue:pageContext.request.locale}"/>-->
+	<fmt:setLocale value="fr"/>
+	<fmt:setBundle basename="fr.eni.enchere.messages.messages"/>
     <header class="py-5 bg-dark">
         <div class="container">
             <div class="row">
@@ -36,7 +40,7 @@
                             <h3 class="text-center"><fmt:message key="msg_create_account_subtitle"></fmt:message></h3>
                         </div>
                     </div>
-                    <form method="post" action="">
+                    <form method="post" action="<%=request.getContextPath()%>/new_account">
                         <div class="form-group row">
                             <div class="col-12 col-sm-12 col-md- col-lg-6">
                             	<!-- Pseudo -->
@@ -62,7 +66,7 @@
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_lastname" var="lastnamePlaceholder"></fmt:message>
                                         <input class="form-control" type="text" id="lastname" name="lastname" maxlength="30" 
-                                        		placeholder="${lastnamePlaceholder}">
+                                        		pattern="[\u00C0-\u017Fa-zA-Z']+([- ][\u00C0-\u017Fa-zA-Z']+)*" placeholder="${lastnamePlaceholder}">
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +79,7 @@
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_firstname" var="firstnamePlaceholder"></fmt:message>
                                         <input class="form-control" type="text" id="firstname" name="firstname" maxlength="30" 
-                                        		placeholder="${firstnamePlaceholder}">
+                                        		pattern="[\u00C0-\u017Fa-zA-Z']+([- ][\u00C0-\u017Fa-zA-Z']+)*" placeholder="${firstnamePlaceholder}">
                                     </div>
                                 </div>
                             </div>
@@ -100,8 +104,8 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_phone" var="phonePlaceholder"></fmt:message>
-                                        <input class="form-control" type="text" id="phonenumber" name="phone" pattern="^0[1-9][0-9]{8}$" 
-                                            	placeholder="${phonePlaceholder}">
+                                        <input class="form-control" type="text" id="phonenumber" name="phone" 
+                                        		pattern="(0|\\+33|0033)[1-9][0-9]{8}$" placeholder="${phonePlaceholder}">
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +118,7 @@
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_address" var="addressPlaceholder"></fmt:message>
                                         <input class="form-control" type="text" id="address" name="address" maxlength="30" 
-                                        		placeholder="${addressPlaceholder}">
+                                        		pattern="^[\w'\-,]*[^._!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:\[\]]*$" placeholder="${addressPlaceholder}">
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +131,7 @@
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_postal_code" var="postalCodePlaceholder"></fmt:message>
                                         <input class="form-control" type="text" id="postalcode" name="postalcode" maxlength="10" 
-                                            	pattern="(([0-8][0-9])|(9[0-5]))[0-9]{3}$" placeholder="Code postal">
+                                            	pattern="^\\d{5,10}$" placeholder="Code postal">
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +144,7 @@
                                     <div class="col-7">
                                     	<fmt:message key="msg_profile_city" var="cityPlaceholder"></fmt:message>
                                         <input class="form-control" type="text" id="city" name="city" maxlength="30"
-                                        		placeholder="${cityPlaceholder}">
+                                        		pattern="[\u00C0-\u017Fa-zA-Z']+([- ][\u00C0-\u017Fa-zA-Z']+)*" placeholder="${cityPlaceholder}">
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +157,7 @@
                                     <div class="col-7">
                                     	<fmt:message key="msg_connect_password" var="pwdPlaceholder"></fmt:message>
                                         <input class="form-control" type="password" id="inputPassword" name="password" maxlength="30"
-                                            	placeholder="${pwdPlaceholder}">
+                                            	pattern="[a-zA-Z0-9-*!@#]{1,30}$" placeholder="${pwdPlaceholder}">
                                     </div>
                                 </div>
                             </div>
@@ -165,18 +169,20 @@
                                     </label>
                                     <div class="col-7">
                                     	<fmt:message key="msg_create_account_confirm_password" var="confirmPwdPlaceholder"></fmt:message>
-                                        <input class="form-control" type="password" id="${confirmPwdPlaceholder}" name="confirmpassword"
-                                            	maxlength="30" placeholder="Confirmation">
+                                        <input class="form-control" type="password" id="confirmpassword" name="confirmpassword" maxlength="30" 
+                                        		pattern="[a-zA-Z0-9-*!@#]{1,30}$" placeholder="${confirmPwdPlaceholder}">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row my-10 justify-content-center buttonzone">
                             <div class="col-5">
-                                <input type="submit" class="createButton w-100 h-100" name="create" value="Créer">
+                            	<fmt:message key="msg_create_account_button_create" var="createButton"></fmt:message>
+                                <input type="submit" class="createButton w-100 h-100" name="create" value="${createButton}">
                             </div>
                             <div class="offset-col-2 col-5">
-                                <input type="submit" class="cancelButton w-100 h-100" name="cancel" value="Annuler">
+                            	<fmt:message key="msg_create_account_button_cancel" var="cancelButton"></fmt:message>
+                                <input type="submit" class="cancelButton w-100 h-100" name="cancel" value="${cancelButton}">
                             </div>
                         </div>
                     </form>

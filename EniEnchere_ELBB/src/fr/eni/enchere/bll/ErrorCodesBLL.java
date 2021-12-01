@@ -28,4 +28,7 @@ public abstract class ErrorCodesBLL {
 	
 	public static final int PASSWORD_LENGTH_ERROR = 20016;
 	public static final int CONFIRM_PASSWORD_ERROR = 20017;
+	public static final int PASSWORD_REGEX_ERROR = 20018;
+	
+	public static final int UNICITY_ERROR = 20019;
 }
