@@ -8,24 +8,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletSignout
+ * Servlet implementation class ServletMyProfile
  */
-@WebServlet("/signout")
-public class ServletSignout extends HttpServlet {
+@WebServlet("/ServletMyProfile")
+public class ServletMyProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ServletMyProfile() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().invalidate();
-		response.sendRedirect(request.getContextPath() + "/index");
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

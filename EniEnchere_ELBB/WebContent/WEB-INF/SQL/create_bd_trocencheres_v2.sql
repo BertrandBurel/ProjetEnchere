@@ -53,7 +53,7 @@ CREATE TABLE UTILISATEURS (
     email            VARCHAR(20) NOT NULL UNIQUE, /*changement, mail unique*/
     telephone        VARCHAR(15),
     rue              VARCHAR(30) NOT NULL,
-    code_postal      VARCHAR(10) NOT NULL,
+    code_postal      VARCHAR(5) NOT NULL,  /*code postal à 5 chiffres et non 10*/
     ville            VARCHAR(30) NOT NULL,
     mot_de_passe     VARCHAR(30) NOT NULL,
     credit           INTEGER NOT NULL,

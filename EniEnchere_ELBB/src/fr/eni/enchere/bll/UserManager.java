@@ -75,7 +75,7 @@ public class UserManager {
 		 if (!Pattern.matches(Utils.REGEX_ADDRESS, user.getAddress())) {
 			 businessException.addError(ErrorCodesBLL.ADDRESS_REGEX_ERROR);
 		 }
-		 if (user.getPostalCode().length() > 10) {
+		 if (user.getPostalCode().length() > 5) {
 			 businessException.addError(ErrorCodesBLL.POSTALCODE_LENGTH_ERROR);
 		 }
 		 if (!Pattern.matches(Utils.REGEX_POSTAL_CODE, user.getPostalCode())) {
@@ -84,8 +84,8 @@ public class UserManager {
 		 if (user.getCity().length() > 30) {
 			 businessException.addError(ErrorCodesBLL.CITY_LENGTH_ERROR);
 		 }
-		 if (!Pattern.matches(Utils.REGEX_TEXT, user.getPostalCode())) {
-			 businessException.addError(ErrorCodesBLL.POSTALCODE_REGEX_ERROR);
+		 if (!Pattern.matches(Utils.REGEX_TEXT, user.getCity())) {
+			 businessException.addError(ErrorCodesBLL.CITY_REGEX_ERROR);
 		 }
 		 if (user.getPassword().length() > 30) {
 			 businessException.addError(ErrorCodesBLL.PASSWORD_LENGTH_ERROR);

@@ -14,7 +14,7 @@ public abstract class MessagesReader {
 		}
 	}
 	
-	public static String getMessageErreur(int codeErreur) {
+	public static String getMessageError(int codeErreur) {
 		String message ="";
 		
 		try {
