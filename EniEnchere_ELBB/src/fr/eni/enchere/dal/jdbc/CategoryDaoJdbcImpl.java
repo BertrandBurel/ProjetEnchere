@@ -20,6 +20,7 @@ public class CategoryDaoJdbcImpl implements DAOCategory {
 	private final String UPDATE_CATEGORY = "UPDATE CATEGORIES SET libelle=? " + "WHERE no_categorie=?";
 	private final String DELETE_CATEGORY = "DELETE CATEGORIES WHERE no_categorie=?";
 	private final String SELECT_CATEGORY_BY_NAME = "SELECT * FROM CATEGORIES WHERE libelle=?";
+	private final String SELECT_CATEGORY_BY_ARTICLE = "SELECT c.no_categorie, c.libelle FROM CATEGORIES c INNER JOIN ARTICLES_VENDUS a ON a.no_categorie = c.no_categorie WHERE a.no_article = ?";
 
 	@Override
 	public void insert(Category category) {
@@ -170,6 +171,34 @@ public class CategoryDaoJdbcImpl implements DAOCategory {
 			return category;
 		} catch (SQLException e) {
 			System.err.println("Select par name impossible");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Category getCategoryByArticle(int idArticle) {
+		String request = new String(SELECT_CATEGORY_BY_ARTICLE);
+
+		try {
+			Connection connection = ConnectionProvider.getConnection();
+
+			PreparedStatement statement = connection.prepareStatement(request);
+			statement.setInt(1, idArticle);
+
+			ResultSet resultSet = statement.executeQuery();
+
+			Category category = null;
+			if (resultSet.next()) {
+				category = categoryFormatter(resultSet);
+			}
+
+			statement.close();
+			connection.close();
+
+			return category;
+		} catch (SQLException e) {
+			System.err.println("Select par idArticle impossible");
 			e.printStackTrace();
 		}
 		return null;

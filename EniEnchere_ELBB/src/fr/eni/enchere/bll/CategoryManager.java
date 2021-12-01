@@ -21,4 +21,8 @@ public class CategoryManager {
 	public Category getCategoryByName(String name) {
 		return categoryDao.getCategoryByName(name);
 	}
+
+	public Category getCategoryByArticle(int idArticle) {
+		return categoryDao.getCategoryByArticle(idArticle);
+	}
 }

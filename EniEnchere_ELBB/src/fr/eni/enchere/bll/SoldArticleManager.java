@@ -63,4 +63,8 @@ public class SoldArticleManager {
 			throw new BusinessException();
 		}
 	}
+
+	public SoldArticle getArticleById(int id) throws BusinessException {
+		return soldArticleDao.selectById(id);
+	}
 }

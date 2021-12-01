@@ -1,6 +1,5 @@
 package fr.eni.enchere.dal;
 
-import fr.eni.enchere.bo.Auction;
 import fr.eni.enchere.bo.Withdrawal;
 import fr.eni.enchere.dal.jdbc.AuctionDaoJdbcImpl;
 import fr.eni.enchere.dal.jdbc.CategoryDaoJdbcImpl;
@@ -15,8 +14,8 @@ public class DAOFactory {
 	 * 
 	 * @return DAO<Auction>
 	 */
-	public static DAO<Auction> getAuctionDao() {
-		DAO<Auction> auctionDao = new AuctionDaoJdbcImpl();
+	public static DAOAuction getAuctionDao() {
+		DAOAuction auctionDao = new AuctionDaoJdbcImpl();
 		return auctionDao;
 	}
 

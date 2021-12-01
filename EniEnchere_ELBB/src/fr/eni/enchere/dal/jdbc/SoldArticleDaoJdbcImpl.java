@@ -9,10 +9,9 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.enchere.bo.Category;
 import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.dal.ConnectionProvider;
-import fr.eni.enchere.dal.DAO;
+import fr.eni.enchere.dal.DAOCategory;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.DAOSoldArticle;
 import fr.eni.enchere.dal.DAOUser;
@@ -185,8 +184,6 @@ public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 				statement.setString(paramNumber, "%" + research + "%");
 			}
 
-			System.out.println(request);
-
 			ResultSet resultSet = statement.executeQuery();
 
 			List<SoldArticle> soldArticleList = new ArrayList<>();
@@ -228,7 +225,7 @@ public class SoldArticleDaoJdbcImpl implements DAOSoldArticle {
 
 	private SoldArticle soldArticleFormatter(ResultSet resultSet) throws SQLException, BusinessException {
 		DAOUser daoUser = DAOFactory.getUserDao();
-		DAO<Category> daoCategory = DAOFactory.getCategoryDao();
+		DAOCategory daoCategory = DAOFactory.getCategoryDao();
 
 		SoldArticle soldArticle = new SoldArticle();
 		soldArticle.setId(resultSet.getInt("no_article"));

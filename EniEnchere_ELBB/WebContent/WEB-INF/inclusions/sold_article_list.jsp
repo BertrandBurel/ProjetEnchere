@@ -15,14 +15,14 @@
 		<div class="container">
 	        <div class="row">
 	        	<c:forEach items="${article_list}" var="article">
-					<div class="col-6 form-control">
+					<div class="col-6 form-control" onclick="location.href='<%=request.getContextPath()%>/auction?article_no=${article.id}';" style="cursor: pointer;">
 						<div class="row">
 							<!-- <div class="col-3">
 								<img src="" alt="<fmt:message key="msg_article_img_default"></fmt:message>"></img>
 							</div> 
 							<div class="col-9"> -->
 							<div class="col-12">
-								<h4 class="text-decoration-underline" onclick="/auction">${article.name}</h4>
+								<h4 class="text-decoration-underline">${article.name}</h4>
 								<p><fmt:message key="msg_article_price"></fmt:message>${article.initialPrice} <fmt:message key="msg_article_currency"></fmt:message></p>
 								<p><fmt:message key="msg_article_end_date"></fmt:message>
 									<fmt:parseDate value="${article.auctionEndDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />

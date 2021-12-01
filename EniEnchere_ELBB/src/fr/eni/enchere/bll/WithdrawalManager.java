@@ -36,4 +36,8 @@ public class WithdrawalManager {
 			throw new BusinessException();
 		}
 	}
+
+	public Withdrawal getWithdrawalById(int id) throws BusinessException {
+		return withdrawalDao.selectById(id);
+	}
 }
