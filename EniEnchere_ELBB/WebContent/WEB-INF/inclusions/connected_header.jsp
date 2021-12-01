@@ -34,7 +34,7 @@
 			            	</div>
 	                		<div class="col-3 text-white">
 	                			<!-- Sign out -->
-			            		<a href="<%=request.getContextPath()%>/ServletSignout"><fmt:message key="msg_index_disconnexion"></fmt:message></a>
+			            		<a href="<%=request.getContextPath()%>/signout"><fmt:message key="msg_index_disconnexion"></fmt:message></a>
 			            	</div>
 		            	</div>
 		            </div>
