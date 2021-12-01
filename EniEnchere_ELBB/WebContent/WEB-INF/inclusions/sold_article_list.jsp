@@ -22,7 +22,7 @@
 							</div> 
 							<div class="col-9"> -->
 							<div class="col-12">
-								<h4 class="text-decoration-underline">${article.name}</h4>
+								<h4 class="text-decoration-underline" onclick="/auction">${article.name}</h4>
 								<p><fmt:message key="msg_article_price"></fmt:message>${article.initialPrice} <fmt:message key="msg_article_currency"></fmt:message></p>
 								<p><fmt:message key="msg_article_end_date"></fmt:message>
 									<fmt:parseDate value="${article.auctionEndDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
