@@ -151,7 +151,7 @@ INSERT INTO ARTICLES_VENDUS
 		   date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie)
      VALUES
            ('Trotinette', 'Moteur éléctrique avec chargeur 220V. Modèle enfant, peu servi. Enbouts plastiques du guidon abimés.', 
-		   '2021-11-24', '2021-11-30', 20, null, 3, 4),
+		   '2021-11-24', '2021-12-30', 20, null, 3, 4),
 		   ('IPad 24', 'Super révolutionnaire! Ecran 58 pouces, peut être porté en écharpe de Hipster! Batterie morte et soudée à l''appareil, mais rien qu''un AppStore ne puisse réparer moyennent votre âme!', 
 		   '2021-09-22', '2021-10-30', 8000, 9785, 2, 1),
 		   ('Sofa J&M', 'Sofa confortable, revetement cuir. Troqué avec ses coussins et un petit tapis de sol en coton. Option clic-clac. Etat usagé, quelques traces sur le cuir de l''assise', 
@@ -163,7 +163,7 @@ INSERT INTO ARTICLES_VENDUS
 		   ('Matelas de sport Pourdormire', 'Matelas 220x140, propre. Idéal pour les push-up et les ron-pich!', 
 		   '2021-10-30', '2021-11-24', 15, 48, 5, 4),
 		   ('Star Craft Troie', 'Jeux de gestion de magasin à l''époque de la guerre de Troie. Le but est de confectionner des épées de papier pour équiper son armée de chanteurs des Enfoirés', 
-		   '2021-10-24', '2021-11-30', 40, null, 2, 1)
+		   '2021-10-24', '2021-12-30', 40, null, 2, 1)
 		   
 --
 -- AUCTION

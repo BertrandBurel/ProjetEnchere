@@ -36,7 +36,8 @@ public class SoldArticleManager {
 	 */
 	public List<SoldArticle> getAuctions(int category, String research, int mode, int filters, int userId)
 			throws BusinessException {
-		if (research == null) {
+		if (research == null || research.equals("")) {
+			research = null;
 			return soldArticleDao.selectAuctions(category, research, mode, filters, userId);
 		}
 

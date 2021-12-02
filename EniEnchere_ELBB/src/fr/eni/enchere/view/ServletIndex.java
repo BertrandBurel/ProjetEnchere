@@ -116,36 +116,39 @@ public class ServletIndex extends HttpServlet {
 		User user = null;
 		List<SoldArticle> articleList = null;
 
-		if (request.getParameter("category_choice") != null) {
+		if (request.getParameter("category_choice") != null && !request.getParameter("category_choice").equals("")) {
 			categoryParam = request.getParameter("category_choice");
 			categoryId = Integer.valueOf(categoryParam);
 		}
 
-		if (request.getParameter("search_string") != null) {
+		if (request.getParameter("search_string") != null && !request.getParameter("search_string").equals("")) {
 			research = request.getParameter("search_string");
 		}
 
-		if (request.getParameter("auction_type") != null) {
+		if (request.getParameter("auction_type") != null && !request.getParameter("auction_type").equals("")) {
 			if (request.getParameter("auction_type").equals("buy")) {
 				mode = 2;
-				if (request.getParameter("open_auctions") != null) {
+				if (request.getParameter("open_auctions") != null
+						&& !request.getParameter("open_auctions").equals("")) {
 					filters += 1;
 				}
-				if (request.getParameter("ongoing_auctions") != null) {
+				if (request.getParameter("ongoing_auctions") != null
+						&& !request.getParameter("ongoing_auctions").equals("")) {
 					filters += 2;
 				}
-				if (request.getParameter("won_auctions") != null) {
+				if (request.getParameter("won_auctions") != null && !request.getParameter("won_auctions").equals("")) {
 					filters += 4;
 				}
 			} else if (request.getParameter("auction_type").equals("sell")) {
 				mode = 1;
-				if (request.getParameter("open_sells") != null) {
+				if (request.getParameter("open_sells") != null && !request.getParameter("open_sells").equals("")) {
 					filters += 1;
 				}
-				if (request.getParameter("ongoing_sells") != null) {
+				if (request.getParameter("ongoing_sells") != null
+						&& !request.getParameter("ongoing_sells").equals("")) {
 					filters += 2;
 				}
-				if (request.getParameter("closed_sells") != null) {
+				if (request.getParameter("closed_sells") != null && !request.getParameter("closed_sells").equals("")) {
 					filters += 4;
 				}
 			}
