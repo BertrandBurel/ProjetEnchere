@@ -39,7 +39,7 @@ ALTER TABLE ENCHERES ADD constraint enchere_pk PRIMARY KEY (no_utilisateur, no_a
 CREATE TABLE RETRAITS (
 	no_article         INTEGER NOT NULL,
     rue              VARCHAR(30) NOT NULL,
-    code_postal      VARCHAR(15) NOT NULL,
+    code_postal      VARCHAR(5) NOT NULL, /*Code postal sur 15 char remis à 5*/
     ville            VARCHAR(30) NOT NULL
 )
 

@@ -1,11 +1,11 @@
 package fr.eni.enchere.bo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Auction {
 	private User user;
 	private SoldArticle article;
-	private Date auctionDate;
+	private LocalDate auctionDate;
 	private int bidPrice;
 
 	/**
@@ -22,7 +22,7 @@ public class Auction {
 	 * @param auctionDate
 	 * @param bidPrice
 	 */
-	public Auction(User user, SoldArticle article, Date auctionDate, int bidPrice) {
+	public Auction(User user, SoldArticle article, LocalDate auctionDate, int bidPrice) {
 		this.user = user;
 		this.article = article;
 		this.auctionDate = auctionDate;
@@ -45,11 +45,11 @@ public class Auction {
 		this.article = article;
 	}
 
-	public Date getAuctionDate() {
+	public LocalDate getAuctionDate() {
 		return auctionDate;
 	}
 
-	public void setAuctionDate(Date auctionDate) {
+	public void setAuctionDate(LocalDate auctionDate) {
 		this.auctionDate = auctionDate;
 	}
 

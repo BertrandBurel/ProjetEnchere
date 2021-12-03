@@ -1,6 +1,7 @@
 package fr.eni.enchere.view;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -98,7 +99,28 @@ public class ServletAuction extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String articleId = request.getParameter("article_id");
+		String userPseudo = String.valueOf(session.getAttribute("pseudo"));
+		int bid = Integer.valueOf(request.getParameter("bid"));
 
+		try {
+			if (bid < Integer.valueOf(request.getParameter("min_bid"))) {
+				throw new BusinessException();
+			}
+
+			SoldArticle soldArticle = soldArticleManager.getArticleById(Integer.valueOf(articleId));
+			User user = userManager.getUserByPseudo(userPseudo);
+
+			Auction auction = new Auction(user, soldArticle, LocalDate.now(), bid);
+
+			auctionManager.insertAuction(auction);
+
+		} catch (NumberFormatException | BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		response.sendRedirect(request.getContextPath() + "/index");
 	}
-
 }

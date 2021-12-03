@@ -106,16 +106,18 @@
 				<!-- proposition -->
 				<div class="col-12">
 					<form class="row" action="auction" method="post">
+						<input type="hidden" name="article_id" value="${article.id}" />
 						<div class="col-4">
 							<p><fmt:message key="msg_auction_my_bid"></fmt:message></p>
 						</div>
 						<div class="col-4">
 							<input class="form-control-lg" type="number" name="bid" 
-									value="${(auction == null)? article.initialPrice : auction.bidPrice}" 
-									min="${(auction == null)? article.initialPrice : auction.bidPrice} + 1"/>
+									value="${((auction == null)? article.initialPrice : auction.bidPrice) + 1 }" 
+									min="${((auction == null)? article.initialPrice : auction.bidPrice) + 1 }"/>
+							<input type="hidden" name="min_bid" value="${((auction == null)? article.initialPrice : auction.bidPrice) + 1 }" />
 						</div>
 						<div class="col-4">
-							<input class="btn btn-primary form-control-lg" type="button" value="<fmt:message key="msg_auction_validation"></fmt:message>"/>
+							<input class="btn btn-primary form-control-lg" type="submit" value="<fmt:message key="msg_auction_validation"></fmt:message>"/>
 						</div>
 					</form>
 				</div>
