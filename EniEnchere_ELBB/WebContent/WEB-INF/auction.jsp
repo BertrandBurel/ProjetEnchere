@@ -26,6 +26,16 @@
 				<div class="col-12">
 					<h3>${article.name}</h3>
 				</div>
+				<!-- errors -->
+				<c:if test="${!empty listErrors}">
+                   	<div>
+                   		<ul>
+                   			<c:forEach var="error" items="${listErrors}">
+                   				<li class="text-danger">${error}</li>
+                   			</c:forEach>
+                   		</ul>
+                   	</div>
+                </c:if>
 				<!-- description -->
 				<div class="col-12">
 					<div class="row">
@@ -112,7 +122,7 @@
 						</div>
 						<div class="col-4">
 							<input class="form-control-lg" type="number" name="bid" 
-									value="${((auction == null)? article.initialPrice : auction.bidPrice) + 1 }" 
+									value="${((auction == null)? article.initialPrice : auction.bidPrice) + 1 }"
 									min="${((auction == null)? article.initialPrice : auction.bidPrice) + 1 }"/>
 							<input type="hidden" name="min_bid" value="${((auction == null)? article.initialPrice : auction.bidPrice) + 1 }" />
 						</div>

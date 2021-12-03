@@ -2,6 +2,8 @@ package fr.eni.enchere.view;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.bo.User;
 import fr.eni.enchere.bo.Withdrawal;
 import fr.eni.enchere.exceptions.BusinessException;
+import fr.eni.enchere.messages.MessagesReader;
 
 /**
  * Servlet implementation class ServletAuction
@@ -100,24 +103,41 @@ public class ServletAuction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		BusinessException businessException = new BusinessException();
+		List<String> listErrors = new ArrayList<>();
 		String articleId = request.getParameter("article_id");
 		String userPseudo = String.valueOf(session.getAttribute("pseudo"));
 		int bid = Integer.valueOf(request.getParameter("bid"));
 
 		try {
-			if (bid < Integer.valueOf(request.getParameter("min_bid"))) {
-				throw new BusinessException();
-			}
-
 			SoldArticle soldArticle = soldArticleManager.getArticleById(Integer.valueOf(articleId));
 			User user = userManager.getUserByPseudo(userPseudo);
 
 			Auction auction = new Auction(user, soldArticle, LocalDate.now(), bid);
 
-			auctionManager.insertAuction(auction);
+			businessException = auctionManager.validateNewAccount(auction,
+					Integer.valueOf(request.getParameter("min_bid")));
+			if (businessException.hasErrors()) {
+				for (Integer codeError : businessException.getListErrorCodes()) {
+					listErrors.add(MessagesReader.getMessageError(codeError));
+				}
 
+				Withdrawal withdrawal = withdrawalManager.getWithdrawalById(soldArticle.getId());
+
+				request.setAttribute("listErrors", listErrors);
+				request.setAttribute("article", soldArticle);
+				request.setAttribute("seller", soldArticle.getUser());
+				request.setAttribute("category", soldArticle.getCategory());
+				request.setAttribute("withdrawal", withdrawal);
+				request.setAttribute("auction", auction);
+
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auction.jsp");
+				rd.forward(request, response);
+				return;
+			} else {
+				auctionManager.insertAuction(auction);
+			}
 		} catch (NumberFormatException | BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

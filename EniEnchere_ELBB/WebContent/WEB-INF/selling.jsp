@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <fmt:setLocale value="${!empty sessionScope.langue?sessionScope.langue:pageContext.request.locale}"/>
 <fmt:setBundle basename="fr.eni.enchere.messages.messages"/>
+<%@ page import="java.time.LocalDate" %>
 
 <!DOCTYPE html>
 <html>
@@ -40,19 +41,29 @@
 	        	<div class="col-9"> -->
 	        	<div class="col-12">
 	        		<div class="row">
+		        		<!-- errors -->
+						<c:if test="${!empty listErrors}">
+		                   	<div>
+		                   		<ul>
+		                   			<c:forEach var="error" items="${listErrors}">
+		                   				<li class="text-danger">${error}</li>
+		                   			</c:forEach>
+		                   		</ul>
+		                   	</div>
+		                </c:if>
 	        			<!-- Article name -->
 	        			<div class="col-2">
 	        				<p><fmt:message key="msg_selling_form_name"></fmt:message></p>
 	        			</div>
 	        			<div class="col-10">
-	        				<input type="text" name="name" maxlength="30" autofocus="autofocus"/>
+	        				<input type="text" name="name" maxlength="30" autofocus="autofocus" value="${article.name}"/>
 	        			</div>
 	        			<!-- Article description -->
 	        			<div class="col-2">
 	        				<p><fmt:message key="msg_selling_form_description"></fmt:message></p>
 	        			</div>
 	        			<div class="col-10">
-	        				<textarea name="description" maxlength="300"></textarea>
+	        				<textarea name="description" maxlength="300">${article.description}</textarea>
 	        			</div>
 	        			<!-- Article category -->
 	        			<div class="col-4">
@@ -62,7 +73,7 @@
 							<select class="form-select form-control" name="category_choice">
 								<option selected disabled value=""><fmt:message key="msg_index_category_choice"></fmt:message></option>
 								<c:forEach items="${categories}" var="category">
-								    <option value="${category.name}">${category.name}</option> <!-- TODO -->
+								    <option value="${category.name}">${category.name}</option>
 								</c:forEach>
 							</select>
 	        			</div>
@@ -72,21 +83,21 @@
 	        				<p><fmt:message key="msg_selling_form_price"></fmt:message></p>
 	        			</div>
 	        			<div class="col-8">
-							<input type="number" name="start_price"/>
+							<input type="number" name="start_price" min="1" value="${article.initialPrice}"/>
 	        			</div>
 	        			<!-- Article starting date -->
 	        			<div class="col-4">
 	        				<p><fmt:message key="msg_selling_form_strating_date"></fmt:message></p>
 	        			</div>
 	        			<div class="col-8">
-							<input type="date" name="start_date" min="" max=""/> <!-- TODO -->
+							<input type="date" name="start_date" min="${LocalDate.now()}" value="${article.auctionStartDate}"/>
 	        			</div>
 	        			<!-- Article ending date -->
 	        			<div class="col-4">
 	        				<p><fmt:message key="msg_selling_form_ending_date"></fmt:message></p>
 	        			</div>
 	        			<div class="col-8">
-							<input type="date" name="end_date" min="" max=""/> <!-- TODO -->
+							<input type="date" name="end_date" min="${LocalDate.now()}" value="${article.auctionEndDate}"/>
 	        			</div>
 	        			<div class="col-12">
 	        			<!-- Whithdrawal field -->

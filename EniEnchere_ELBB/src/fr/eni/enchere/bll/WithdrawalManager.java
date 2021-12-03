@@ -40,4 +40,28 @@ public class WithdrawalManager {
 	public Withdrawal getWithdrawalById(int id) throws BusinessException {
 		return withdrawalDao.selectById(id);
 	}
+
+	public BusinessException validateNewAccount(Withdrawal withdrawal) {
+		BusinessException businessException = new BusinessException();
+
+		if (withdrawal.getStreet().length() > 30) {
+			businessException.addError(ErrorCodesBLL.ADDRESS_LENGTH_ERROR);
+		}
+		if (!Pattern.matches(Utils.REGEX_ADDRESS, withdrawal.getStreet())) {
+			businessException.addError(ErrorCodesBLL.ADDRESS_REGEX_ERROR);
+		}
+		if (withdrawal.getPostalCode().length() > 5) {
+			businessException.addError(ErrorCodesBLL.POSTALCODE_LENGTH_ERROR);
+		}
+		if (!Pattern.matches(Utils.REGEX_POSTAL_CODE, withdrawal.getPostalCode())) {
+			businessException.addError(ErrorCodesBLL.POSTALCODE_REGEX_ERROR);
+		}
+		if (withdrawal.getTown().length() > 30) {
+			businessException.addError(ErrorCodesBLL.CITY_LENGTH_ERROR);
+		}
+		if (!Pattern.matches(Utils.REGEX_TEXT, withdrawal.getTown())) {
+			businessException.addError(ErrorCodesBLL.CITY_REGEX_ERROR);
+		}
+		return businessException;
+	}
 }

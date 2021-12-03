@@ -2,7 +2,10 @@ package fr.eni.enchere.view;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +22,7 @@ import fr.eni.enchere.bo.SoldArticle;
 import fr.eni.enchere.bo.User;
 import fr.eni.enchere.bo.Withdrawal;
 import fr.eni.enchere.exceptions.BusinessException;
+import fr.eni.enchere.messages.MessagesReader;
 
 /**
  * Servlet implementation class ServletSellingRegister
@@ -50,10 +54,14 @@ public class ServletSellingRegister extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		BusinessException businessException = new BusinessException();
+		List<String> listErrors = new ArrayList<>();
 		SoldArticle soldArticle = new SoldArticle();
 		User user = null;
 		Withdrawal withdrawal = new Withdrawal();
 		Category category = new Category();
+		HttpSession session = request.getSession();
+		String pseudo = String.valueOf(session.getAttribute("pseudo"));
 
 		withdrawal.setStreet(request.getParameter("road"));
 		withdrawal.setPostalCode(request.getParameter("postal_code"));
@@ -62,24 +70,54 @@ public class ServletSellingRegister extends HttpServlet {
 		soldArticle.setName(request.getParameter("name"));
 		soldArticle.setDescription(request.getParameter("description"));
 
-		soldArticle.setInitialPrice(Integer.valueOf(request.getParameter("start_price")));
-
-		soldArticle.setAuctionStartDate(LocalDate.parse(request.getParameter("start_date")));
-		soldArticle.setAuctionEndDate(LocalDate.parse(request.getParameter("end_date")));
-
-		HttpSession session = request.getSession();
-		String pseudo = String.valueOf(session.getAttribute("pseudo"));
+		if (request.getParameter("start_price") != null && request.getParameter("start_price") != "") {
+			soldArticle.setInitialPrice(Integer.valueOf(request.getParameter("start_price")));
+		} else {
+			soldArticle.setInitialPrice(0); // generate a controlled exception
+		}
+		if (request.getParameter("start_date") != null && request.getParameter("start_date") != "") {
+			soldArticle.setAuctionStartDate(LocalDate.parse(request.getParameter("start_date")));
+		}
+		if (request.getParameter("end_date") != null && request.getParameter("end_date") != "") {
+			soldArticle.setAuctionEndDate(LocalDate.parse(request.getParameter("end_date")));
+		}
 
 		try {
 			user = userManager.getUserByPseudo(pseudo);
 			category = categoryManager.getCategoryByName(request.getParameter("category_choice"));
 			soldArticle.setCategory(category);
 			soldArticle.setUser(user);
-			soldArticleManager.insertSoldArticle(soldArticle);
 
-			withdrawal.setArticle(soldArticle);
-			withdrawalManager.insertWithdrawal(withdrawal);
+			BusinessException tempError = withdrawalManager.validateNewAccount(withdrawal);
+			List<Integer> errors = tempError.getListErrorCodes();
 
+			businessException = soldArticleManager.validateNewAccount(soldArticle);
+
+			for (Integer error : errors) {
+				businessException.addError(error);
+			}
+
+			if (businessException.hasErrors()) {
+				for (Integer codeError : businessException.getListErrorCodes()) {
+					listErrors.add(MessagesReader.getMessageError(codeError));
+				}
+
+				request.setAttribute("listErrors", listErrors);
+				request.setAttribute("user", user);
+				request.setAttribute("categories", categoryManager.getCategories());
+
+				request.setAttribute("article", soldArticle);
+
+				RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/selling.jsp");
+				rd.forward(request, response);
+				return;
+			} else {
+
+				soldArticleManager.insertSoldArticle(soldArticle);
+
+				withdrawal.setArticle(soldArticle);
+				withdrawalManager.insertWithdrawal(withdrawal);
+			}
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}

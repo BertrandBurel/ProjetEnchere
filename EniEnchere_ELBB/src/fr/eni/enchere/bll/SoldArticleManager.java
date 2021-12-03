@@ -1,5 +1,6 @@
 package fr.eni.enchere.bll;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -67,5 +68,43 @@ public class SoldArticleManager {
 
 	public SoldArticle getArticleById(int id) throws BusinessException {
 		return soldArticleDao.selectById(id);
+	}
+
+	public BusinessException validateNewAccount(SoldArticle soldArticle) {
+		BusinessException businessException = new BusinessException();
+
+		if (soldArticle.getName().length() == 0) {
+			businessException.addError(ErrorCodesBLL.ARTICLE_NAME_NULL_ERROR);
+		}
+		if (soldArticle.getName().length() > 30) {
+			businessException.addError(ErrorCodesBLL.ARTICLE_NAME_LENGHT_ERROR);
+		}
+		if (soldArticle.getDescription().length() == 0) {
+			businessException.addError(ErrorCodesBLL.ARTICLE_DESCRIPTION_NULL_ERROR);
+		}
+		if (soldArticle.getDescription().length() > 300) {
+			businessException.addError(ErrorCodesBLL.ARTICLE_DESCRIPTION_LENGHT_ERROR);
+		}
+		if (soldArticle.getCategory() == null) {
+			businessException.addError(ErrorCodesBLL.NO_CATEGORY_ERROR);
+		}
+		if (soldArticle.getInitialPrice() <= 0) {
+			businessException.addError(ErrorCodesBLL.NEGATIVE_PRICE_ERROR);
+		}
+		if (soldArticle.getAuctionStartDate() == null) {
+			businessException.addError(ErrorCodesBLL.STARTING_DATE_NULL_ERROR);
+		} else {
+			if (soldArticle.getAuctionStartDate().atStartOfDay().isBefore(LocalDate.now().atStartOfDay())) {
+				businessException.addError(ErrorCodesBLL.PAST_STARTING_DATE_ERROR);
+			}
+		}
+		if (soldArticle.getAuctionEndDate() == null) {
+			businessException.addError(ErrorCodesBLL.ENDING_DATE_NULL_ERROR);
+		} else {
+			if (soldArticle.getAuctionStartDate().isAfter(soldArticle.getAuctionEndDate())) {
+				businessException.addError(ErrorCodesBLL.ENDING_DATE_BEFORE_START_ERROR);
+			}
+		}
+		return businessException;
 	}
 }
